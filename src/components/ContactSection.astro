@@ -4,7 +4,7 @@ import type { Locale } from '../i18n/translations';
 import { Mail, Download, Copy, Check } from '@lucide/astro';
 import GithubIcon from '../assets/icons/github.svg';
 import LinkedinIcon from '../assets/icons/linkedin.svg';
-import { author } from '../config/site';
+import { author, linkedinFor } from '../config/site';
 
 interface Props {
   locale: Locale;
@@ -27,7 +27,7 @@ const channels = [
     key: 'linkedin',
     label: t('contact.linkedinLabel'),
     value: 'in/dylan-sohet',
-    href: author.linkedin,
+    href: linkedinFor(locale),
     external: true,
     accent: 'bg-blue-500/10 text-blue-600 dark:text-blue-400',
   },

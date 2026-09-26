@@ -12,7 +12,7 @@ import {
   CodeXml,
 } from '@lucide/astro';
 import { sections } from '../../config/sections';
-import { author, site } from '../../config/site';
+import { author, site, linkedinFor } from '../../config/site';
 import { useTranslations } from '../../i18n/translations';
 import type { Locale } from '../../i18n/translations';
 
@@ -123,7 +123,7 @@ export function buildCommandGroups(locale: Locale): readonly CommandGroup[] {
       label: t('commandPalette.linkedin'),
       keywords: 'linkedin professional profile profil',
       action: 'external',
-      href: author.linkedin,
+      href: linkedinFor(locale),
     },
   ];
 

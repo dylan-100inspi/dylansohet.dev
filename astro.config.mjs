@@ -108,6 +108,39 @@ export default defineConfig({
     }),
   ],
 
+  // CSP is emitted as a <meta> tag: Astro auto-hashes every script/style it
+  // bundles or inlines. Only the hand-written `is:inline` scripts and external
+  // origins need manual entries below. `frame-ancestors` cannot live in a
+  // <meta> CSP, so it stays as an HTTP header in vercel.json.
+  security: {
+    csp: {
+      directives: [
+        "default-src 'self'",
+        "base-uri 'self'",
+        "object-src 'none'",
+        "form-action 'self'",
+        "img-src 'self' data:",
+        "font-src 'self'",
+        "connect-src 'self' https://cloud.umami.is",
+        "manifest-src 'self'",
+        'upgrade-insecure-requests',
+      ],
+      scriptDirective: {
+        resources: ["'self'", 'https://cloud.umami.is'],
+        // Hand-written is:inline scripts Astro does not process: root-locale
+        // redirect (index.astro), no-FOUC theme + reveal-motion (BaseLayout).
+        hashes: [
+          'sha256-VuXFE0ohOPI6dGIChn1AKT6R/NpHAaNQuDnuJm3KtNY=',
+          'sha256-SjdYx78752ievk2BYq/lFta32vpVf6gmzU/+C1VQGvQ=',
+          'sha256-3Ozvi5u5h5KMcX/2rz6VATYOk96IS1yU7S0wlSFpcuo=',
+        ],
+      },
+      styleDirective: {
+        resources: ["'self'", "'unsafe-inline'"],
+      },
+    },
+  },
+
   vite: {
     plugins: [tailwindcss()],
     optimizeDeps: {

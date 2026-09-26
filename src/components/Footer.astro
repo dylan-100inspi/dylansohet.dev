@@ -4,7 +4,7 @@ import type { Locale } from '../i18n/translations';
 import { Mail } from '@lucide/astro';
 import GithubIcon from '../assets/icons/github.svg';
 import LinkedinIcon from '../assets/icons/linkedin.svg';
-import { author, site } from '../config/site';
+import { author, site, linkedinFor } from '../config/site';
 
 interface Props {
   locale: Locale;
@@ -28,7 +28,7 @@ const currentYear = new Date().getFullYear();
           <Mail class="h-5 w-5" />
         </a>
         <a
-          href={author.linkedin}
+          href={linkedinFor(locale)}
           target="_blank"
           rel="noopener noreferrer"
           class="inline-flex h-11 w-11 items-center justify-center rounded-lg transition-colors hover:bg-slate-800 hover:text-teal-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-500"

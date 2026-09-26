@@ -20,8 +20,10 @@ jobs:
           cache: pnpm
       - run: pnpm install --frozen-lockfile
       - run: pnpm build
-      # External rate-limits/bot-blocks (429/403) pass; genuine internal 404s fail the check.
+      # --root-dir resolves internal links against dist/. Accept external bot-blocks
+      # (LinkedIn 999, Udemy 403/429). Self-domain exclude is scheme-scoped so it
+      # can't also match the runner's "dylansohet.dev" file paths.
       - uses: lycheeverse/lychee-action@v2
         with:
-          args: --base dist --accept 200,206,429,403 --no-progress "dist/**/*.html"
+          args: --root-dir "$(pwd)/dist" --exclude 'https://dylansohet\.dev' --accept 200,206,403,429,999 --no-progress "dist/**/*.html"
           fail: true
