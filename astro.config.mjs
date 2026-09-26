@@ -122,7 +122,8 @@ export default defineConfig({
         // blob: lets the 3D easter-egg (model-viewer) load GLB-embedded textures.
         "img-src 'self' data: blob:",
         "font-src 'self'",
-        "connect-src 'self' https://cloud.umami.is blob:",
+        // Umami Cloud loads script.js from cloud.umami.is but sends events to gateway.umami.is.
+        "connect-src 'self' https://cloud.umami.is https://gateway.umami.is blob:",
         "manifest-src 'self'",
         'upgrade-insecure-requests',
       ],
