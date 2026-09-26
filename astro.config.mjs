@@ -119,14 +119,17 @@ export default defineConfig({
         "base-uri 'self'",
         "object-src 'none'",
         "form-action 'self'",
-        "img-src 'self' data:",
+        // blob: lets the 3D easter-egg (model-viewer) load GLB-embedded textures.
+        "img-src 'self' data: blob:",
         "font-src 'self'",
-        "connect-src 'self' https://cloud.umami.is",
+        "connect-src 'self' https://cloud.umami.is blob:",
         "manifest-src 'self'",
         'upgrade-insecure-requests',
       ],
       scriptDirective: {
-        resources: ["'self'", 'https://cloud.umami.is'],
+        // 'wasm-unsafe-eval' lets model-viewer compile its WebAssembly (3D egg)
+        // without enabling general eval().
+        resources: ["'self'", 'https://cloud.umami.is', "'wasm-unsafe-eval'"],
         // Hand-written is:inline scripts Astro does not process: root-locale
         // redirect (index.astro), no-FOUC theme + reveal-motion (BaseLayout).
         hashes: [
