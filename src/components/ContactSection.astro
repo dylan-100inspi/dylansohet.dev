@@ -1,0 +1,136 @@
+---
+import { useTranslations } from '../i18n/translations';
+import type { Locale } from '../i18n/translations';
+import { Mail, Download, Copy, Check } from '@lucide/astro';
+import GithubIcon from '../assets/icons/github.svg';
+import LinkedinIcon from '../assets/icons/linkedin.svg';
+import { author } from '../config/site';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+
+const channels = [
+  {
+    key: 'email',
+    label: t('contact.emailLabel'),
+    value: author.email,
+    href: `mailto:${author.email}`,
+    external: false,
+    copy: author.email,
+    accent: 'bg-teal-500/10 text-teal-600 dark:text-teal-400',
+  },
+  {
+    key: 'linkedin',
+    label: t('contact.linkedinLabel'),
+    value: 'in/dylan-sohet',
+    href: author.linkedin,
+    external: true,
+    accent: 'bg-blue-500/10 text-blue-600 dark:text-blue-400',
+  },
+  {
+    key: 'github',
+    label: t('contact.githubLabel'),
+    value: 'dylan-100inspi',
+    href: author.github,
+    external: true,
+    accent: 'bg-slate-500/10 text-slate-700 dark:text-slate-200',
+  },
+];
+---
+
+<section id="contact" class="py-16 sm:py-20 lg:py-24">
+  <div class="mx-auto max-w-3xl px-4 sm:px-6" data-reveal-stagger>
+    <h2
+      class="reveal text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl dark:text-slate-50"
+    >
+      {t('contact.heading')}
+    </h2>
+    <p class="reveal mt-4 text-lg leading-relaxed text-slate-700 dark:text-slate-300">
+      {t('contact.lead')}
+    </p>
+
+    <ul class="mt-8 space-y-3">
+      {
+        channels.map((channel) => (
+          <li class="reveal">
+            <div class="group relative flex items-center gap-4 rounded-xl border border-slate-200 bg-white/60 p-4 transition-all duration-200 hover:-translate-y-0.5 hover:border-teal-500/50 hover:shadow-md motion-safe:active:translate-y-px motion-safe:active:shadow-none dark:border-slate-800 dark:bg-slate-900/40">
+              <a
+                href={channel.href}
+                target={channel.external ? '_blank' : undefined}
+                rel={channel.external ? 'noopener noreferrer' : undefined}
+                class="absolute inset-0 rounded-xl focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-500"
+                aria-label={channel.label}
+              />
+              <span
+                class={`flex h-10 w-10 shrink-0 items-center justify-center rounded-lg transition-transform duration-200 group-hover:scale-110 ${channel.accent}`}
+              >
+                {channel.key === 'email' && <Mail class="h-5 w-5" />}
+                {channel.key === 'linkedin' && <LinkedinIcon class="h-5 w-5" />}
+                {channel.key === 'github' && <GithubIcon class="h-5 w-5" />}
+              </span>
+              <span class="min-w-0 flex-1">
+                <span class="block text-sm font-medium text-slate-500 dark:text-slate-400">
+                  {channel.label}
+                </span>
+                <span class="block truncate font-medium text-slate-900 group-hover:text-teal-600 dark:text-slate-100 dark:group-hover:text-teal-400">
+                  {channel.value}
+                </span>
+              </span>
+              {channel.copy && (
+                <button
+                  type="button"
+                  data-copy={channel.copy}
+                  class="relative z-10 flex h-9 w-9 shrink-0 items-center justify-center rounded-lg text-slate-400 transition-colors hover:bg-slate-100 hover:text-teal-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-500 dark:hover:bg-slate-800 dark:hover:text-teal-400"
+                  aria-label={t('commandPalette.copyEmail')}
+                >
+                  <Copy class="copy-idle h-4 w-4" />
+                  <Check class="copy-done hidden h-4 w-4 text-teal-500" />
+                </button>
+              )}
+            </div>
+          </li>
+        ))
+      }
+    </ul>
+
+    <div class="reveal mt-4">
+      <a
+        href={`/docs/cv-${locale}.pdf`}
+        download
+        class="download-cta flex w-full items-center justify-center gap-2 overflow-hidden rounded-xl bg-teal-500 px-5 py-3.5 text-sm font-semibold text-slate-900 shadow-sm transition-all duration-150 hover:bg-teal-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-500 motion-safe:active:translate-y-px motion-safe:active:shadow-none"
+      >
+        <Download class="download-cta-icon h-4 w-4" />
+        {t('contact.downloadCv')}
+      </a>
+    </div>
+  </div>
+</section>
+
+<script>
+  const section = document.getElementById('contact');
+  if (section) {
+    section.querySelectorAll<HTMLButtonElement>('button[data-copy]').forEach((btn) => {
+      btn.addEventListener('click', async () => {
+        const text = btn.dataset.copy;
+        if (!text) return;
+        try {
+          await navigator.clipboard.writeText(text);
+        } catch {
+          return;
+        }
+        const idle = btn.querySelector('.copy-idle');
+        const done = btn.querySelector('.copy-done');
+        idle?.classList.add('hidden');
+        done?.classList.remove('hidden');
+        window.setTimeout(() => {
+          idle?.classList.remove('hidden');
+          done?.classList.add('hidden');
+        }, 1500);
+      });
+    });
+  }
+</script>

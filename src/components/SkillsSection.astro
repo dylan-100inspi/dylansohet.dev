@@ -1,0 +1,203 @@
+---
+import { useTranslations } from '../i18n/translations';
+import type { Locale } from '../i18n/translations';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+
+const groups = [
+  {
+    label: t('skills.groups.languages'),
+    items: ['TypeScript', 'JavaScript', 'C#', 'HTML/CSS'],
+  },
+  { label: t('skills.groups.frontend'), items: ['Angular', 'Micro-frontends', 'Node', 'Aurelia'] },
+  {
+    label: t('skills.groups.backend'),
+    items: ['ASP.NET Core', 'EF Core', 'REST APIs', 'Swagger', 'SQL Server', 'MongoDB'],
+  },
+  {
+    label: t('skills.groups.cloud'),
+    items: ['Microsoft Azure', 'Azure DevOps', 'AWS', 'CI/CD', 'Git', 'GitHub', 'Dynatrace'],
+  },
+  { label: t('skills.groups.testing'), items: ['Jest', 'Playwright'] },
+  {
+    label: t('skills.groups.practices'),
+    items: ['Agile', 'Scrum', 'SOLID', 'DDD', 'Design patterns', 'UML'],
+  },
+  {
+    label: t('skills.groups.tools'),
+    items: ['VS/VS Code', 'GitHub Copilot', 'Postman/Insomnia', 'Jira', 'Confluence', 'Figma'],
+  },
+];
+---
+
+<section id="skills" class="py-16 sm:py-20 lg:py-24">
+  <div class="mx-auto max-w-4xl px-4 sm:px-6">
+    <h2 class="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl dark:text-slate-50">
+      {t('skills.heading')}
+    </h2>
+
+    <!-- Terminal-style panel -->
+    <div
+      data-skills-terminal
+      class="mt-8 overflow-hidden rounded-xl border border-slate-200 shadow-sm dark:border-slate-800"
+    >
+      <!-- Title bar -->
+      <div
+        class="flex items-center gap-2 border-b border-slate-200 bg-slate-100 px-4 py-3 dark:border-slate-800 dark:bg-slate-900"
+      >
+        <span class="h-3 w-3 rounded-full bg-red-400/80" aria-hidden="true"></span>
+        <span class="h-3 w-3 rounded-full bg-amber-400/80" aria-hidden="true"></span>
+        <span class="h-3 w-3 rounded-full bg-green-400/80" aria-hidden="true"></span>
+        <span class="ml-2 font-mono text-xs text-slate-500 dark:text-slate-400"
+          >dylan@portfolio: ~/skills</span
+        >
+      </div>
+
+      <!-- Body -->
+      <div class="bg-white px-4 py-5 font-mono text-sm leading-relaxed sm:px-6 dark:bg-slate-950">
+        <p class="text-slate-500 dark:text-slate-400">
+          <span class="text-teal-600 dark:text-teal-400" aria-hidden="true">$</span>
+          <span data-typing> skills --grouped</span>
+        </p>
+
+        <dl class="mt-4 space-y-4">
+          {
+            groups.map((group) => (
+              <div data-reveal>
+                <dt class="font-semibold text-teal-600 dark:text-teal-400">
+                  <span class="text-slate-400 select-none dark:text-slate-600" aria-hidden="true">
+                    ▸{' '}
+                  </span>
+                  {group.label}
+                </dt>
+                <dd class="mt-1.5 flex flex-wrap gap-x-4 gap-y-1.5 pl-4">
+                  {group.items.map((item) => (
+                    <span class="text-slate-700 dark:text-slate-300">
+                      <span class="text-teal-500/50 select-none" aria-hidden="true">
+                        ·{' '}
+                      </span>
+                      {item}
+                    </span>
+                  ))}
+                </dd>
+              </div>
+            ))
+          }
+        </dl>
+
+        <p
+          class="mt-4 flex items-center text-slate-500 dark:text-slate-400"
+          data-reveal
+          aria-hidden="true"
+        >
+          <span class="text-teal-600 dark:text-teal-400">$</span>
+          <span class="ml-2 inline-block h-4 w-2 bg-teal-500 motion-safe:animate-pulse"></span>
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  @media (prefers-reduced-motion: no-preference) {
+    [data-skills-terminal].is-armed [data-reveal] {
+      opacity: 0;
+      transform: translateY(6px);
+    }
+
+    [data-skills-terminal] [data-reveal].is-revealed {
+      opacity: 1;
+      transform: none;
+      transition:
+        opacity 320ms ease-out,
+        transform 320ms ease-out;
+    }
+
+    [data-typing].is-typing::after {
+      content: '';
+      display: inline-block;
+      width: 0.45rem;
+      height: 0.95rem;
+      margin-left: 0.15rem;
+      translate: 0 0.12rem;
+      background-color: var(--color-teal-500, #14b8a6);
+      animation: skills-caret 1s steps(1) infinite;
+    }
+
+    @keyframes skills-caret {
+      0%,
+      50% {
+        opacity: 1;
+      }
+      50.01%,
+      100% {
+        opacity: 0;
+      }
+    }
+  }
+</style>
+
+<script>
+  const terminal = document.querySelector<HTMLElement>('[data-skills-terminal]');
+
+  if (terminal) {
+    const command = terminal.querySelector<HTMLElement>('[data-typing]');
+    const reveals = Array.from(terminal.querySelectorAll<HTMLElement>('[data-reveal]'));
+    const commandText = command?.textContent ?? '';
+
+    const sleep = (ms: number): Promise<void> => new Promise((resolve) => setTimeout(resolve, ms));
+
+    const typeCommand = (): Promise<void> =>
+      new Promise((resolve) => {
+        if (!command) {
+          resolve();
+          return;
+        }
+        command.classList.add('is-typing');
+        let typed = 0;
+        const step = (): void => {
+          typed += 1;
+          command.textContent = commandText.slice(0, typed);
+          if (typed < commandText.length) {
+            setTimeout(step, 45 + Math.random() * 55);
+          } else {
+            command.classList.remove('is-typing');
+            resolve();
+          }
+        };
+        setTimeout(step, 200);
+      });
+
+    const play = async (): Promise<void> => {
+      await typeCommand();
+      await sleep(160);
+      for (const el of reveals) {
+        el.classList.add('is-revealed');
+        await sleep(130);
+      }
+    };
+
+    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      terminal.classList.add('is-armed');
+      if (command) command.textContent = '';
+
+      const observer = new IntersectionObserver(
+        (entries, obs) => {
+          for (const entry of entries) {
+            if (entry.isIntersecting) {
+              obs.disconnect();
+              void play();
+            }
+          }
+        },
+        { threshold: 0, rootMargin: '0px 0px -20% 0px' },
+      );
+      observer.observe(terminal);
+    }
+  }
+</script>

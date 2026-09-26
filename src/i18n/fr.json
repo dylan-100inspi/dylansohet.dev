@@ -1,0 +1,128 @@
+{
+  "site": {
+    "title": "Dylan Sohet — Développeur Full Stack",
+    "description": "Portfolio de Dylan Sohet, Développeur Full Stack basé à Saguenay, QC."
+  },
+  "a11y": {
+    "skipToContent": "Aller au contenu",
+    "sectionProgress": "Progression des sections"
+  },
+  "nav": {
+    "home": "Accueil",
+    "about": "À propos",
+    "now": "En ce moment",
+    "skills": "Compétences",
+    "projects": "Projets",
+    "formations": "Parcours",
+    "recommendations": "Recommandations",
+    "contact": "Contact"
+  },
+  "header": {
+    "toggleTheme": "Basculer le mode sombre",
+    "openMenu": "Ouvrir le menu",
+    "closeMenu": "Fermer le menu",
+    "mainNavigation": "Navigation principale",
+    "mobileNavigation": "Navigation mobile"
+  },
+  "commandPalette": {
+    "placeholder": "Tapez une commande ou recherchez…",
+    "open": "Ouvrir la palette de commandes",
+    "groupNavigation": "Navigation",
+    "groupActions": "Actions",
+    "groupLinks": "Liens",
+    "toggleTheme": "Basculer le thème",
+    "switchLang": "Passer en anglais",
+    "copyEmail": "Copier l'adresse courriel",
+    "copied": "Copié !",
+    "viewSource": "Voir le code source",
+    "githubProfile": "Profil GitHub",
+    "linkedin": "Profil LinkedIn",
+    "empty": "Aucun résultat",
+    "resultsOne": "1 résultat disponible",
+    "resultsMany": "{count} résultats disponibles",
+    "hintNavigate": "Naviguer",
+    "hintSelect": "Sélectionner",
+    "hintClose": "Fermer"
+  },
+  "hero": {
+    "role": "Analyste-Développeur Full Stack",
+    "tagline": "Je transforme vos défis techniques complexes en logiciels simples et fiables.",
+    "downloadCv": "Télécharger le CV",
+    "contact": "Contact",
+    "viewGithub": "GitHub"
+  },
+  "about": {
+    "heading": "À propos",
+    "p1": "Développeur Full Stack motivé et curieux, toujours en quête de nouveaux apprentissages technologiques et de défis à relever. Je suis spécialisé en TypeScript, Angular et C# .NET.",
+    "p2": "J'ai passé trois ans chez DigiWall, une jeune PME en Belgique, où j'ai contribué à la réalisation de six applications, toutes en production — chacune pour une entreprise différente. J'ai développé l'une d'entre elles entièrement seul, de l'analyse à la conception jusqu'au développement et à la livraison en production ; elle est aujourd'hui encore utilisée chaque jour dans l'entreprise. J'ai également été l'un des développeurs principaux, pour une société américaine établie en Flandre — une année complète passée exclusivement en anglais.",
+    "p3": "J'ai ensuite voulu me confronter à un nouvel environnement, géographique et professionnel : je suis parti pour le Québec. Malgré un contexte d'embauche difficile, j'ai su me faire repérer par un gestionnaire bienveillant qui m'a offert ma chance. Je fais aujourd'hui partie de la grande équipe TI de Beneva, où je développe en Angular et TypeScript et livre très régulièrement en production. Bien qu'arrivé depuis peu, j'ai reçu à plusieurs reprises des retours très positifs sur mon travail et ma progression."
+  },
+  "now": {
+    "heading": "En ce moment",
+    "lead": "Ce sur quoi je travaille ces temps-ci.",
+    "work": "Je développe des fonctionnalités d'assurance chez Beneva, utilisées directement par les clients via leur portail, avec une nouvelle livraison toutes les trois semaines.",
+    "building": "Je conçois et peaufine ce portfolio, en soignant l'accessibilité, la performance et les détails.",
+    "learning": "J'affine mes pratiques d'utilisation de l'IA dans mon travail au quotidien et vise une certification sur le sujet.",
+    "personal": "En dehors du code, j'apprends les bases du japonais et je prépare un voyage au Japon."
+  },
+  "skills": {
+    "heading": "Compétences",
+    "groups": {
+      "languages": "Langages",
+      "frontend": "Frontend",
+      "backend": "Backend et données",
+      "cloud": "Cloud et DevOps",
+      "testing": "Tests",
+      "practices": "Méthodologie",
+      "tools": "Outils"
+    }
+  },
+  "projects": {
+    "heading": "Projets",
+    "lead": "Une sélection de ce que j'ai construit.",
+    "viewRepo": "Voir le dépôt",
+    "viewLive": "Voir en ligne",
+    "placeholderCaption": "Aperçu à venir",
+    "descriptions": {
+      "portfolio": "Ce portfolio lui-même — un site bilingue qui me correspond et reflète la façon dont je travaille."
+    }
+  },
+  "formations": {
+    "heading": "Parcours académique et formations",
+    "educationLabel": "Parcours académique",
+    "coursesLabel": "Formations suivies",
+    "degree": "Bachelier en informatique de gestion",
+    "issued": "Obtenu en",
+    "credentialId": "Identifiant",
+    "viewCertificate": "Afficher le certificat"
+  },
+  "recommendations": {
+    "heading": "Recommandations",
+    "lead": "Quelques mots de personnes avec qui j'ai travaillé.",
+    "source": "Issues de LinkedIn",
+    "relationship": {
+      "leander": "Nous avons collaboré",
+      "nicolas": "Responsable direct"
+    }
+  },
+  "contact": {
+    "heading": "Contact",
+    "lead": "Que ce soit pour un projet, un poste ou simplement pour échanger, vous pouvez me joindre facilement par courriel ou sur LinkedIn.",
+    "emailLabel": "Courriel",
+    "linkedinLabel": "LinkedIn",
+    "githubLabel": "GitHub",
+    "downloadCv": "Télécharger le CV"
+  },
+  "footer": {
+    "sourceCode": "Code source",
+    "rights": "Tous droits réservés."
+  },
+  "notFound": {
+    "backHome": "Retour à l'accueil",
+    "message": "Cette page a été élaguée par le Tribunal des Variations Anachroniques (TVA) pour préserver l'Éternel Flux Temporel."
+  },
+  "easterEgg": {
+    "message": "Tu as trouvé l'Easter Egg",
+    "close": "Fermer"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "recommendations": [
+    "astro-build.astro-vscode",
+    "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode",
+    "jellyedwards.gitsweep",
+    "tomoki1207.pdf"
+  ],
+  "unwantedRecommendations": []
+}

@@ -1,0 +1,33 @@
+---
+import { Sun, Moon, AtSign, Check } from '@lucide/astro';
+import GithubIcon from '../../assets/icons/github.svg';
+import LinkedinIcon from '../../assets/icons/linkedin.svg';
+import type { CommandItem } from './command-items';
+
+interface Props {
+  readonly item: CommandItem;
+}
+
+const { item } = Astro.props;
+const ItemIcon = item.Icon;
+---
+
+{
+  item.id === 'toggle-theme' ? (
+    <Fragment>
+      <Sun class="cmdk-icon cmdk-theme-sun hidden h-5 w-5 shrink-0" aria-hidden="true" />
+      <Moon class="cmdk-icon cmdk-theme-moon h-5 w-5 shrink-0" aria-hidden="true" />
+    </Fragment>
+  ) : item.id === 'copy-email' ? (
+    <Fragment>
+      <AtSign class="cmdk-icon cmdk-copy-idle h-5 w-5 shrink-0" aria-hidden="true" />
+      <Check class="cmdk-icon cmdk-copy-done hidden h-5 w-5 shrink-0" aria-hidden="true" />
+    </Fragment>
+  ) : item.id === 'github-profile' ? (
+    <GithubIcon class="cmdk-icon h-5 w-5 shrink-0" aria-hidden="true" />
+  ) : item.id === 'linkedin-profile' ? (
+    <LinkedinIcon class="cmdk-icon h-5 w-5 shrink-0" aria-hidden="true" />
+  ) : ItemIcon ? (
+    <ItemIcon class="cmdk-icon h-5 w-5 shrink-0" aria-hidden="true" />
+  ) : null
+}

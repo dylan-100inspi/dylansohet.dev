@@ -1,0 +1,128 @@
+{
+  "site": {
+    "title": "Dylan Sohet — Full Stack Developer",
+    "description": "Portfolio of Dylan Sohet, Full Stack Developer based in Saguenay, QC."
+  },
+  "a11y": {
+    "skipToContent": "Skip to content",
+    "sectionProgress": "Section progress"
+  },
+  "nav": {
+    "home": "Home",
+    "about": "About",
+    "now": "Now",
+    "skills": "Skills",
+    "projects": "Projects",
+    "formations": "Education",
+    "recommendations": "Recommendations",
+    "contact": "Contact"
+  },
+  "header": {
+    "toggleTheme": "Toggle dark mode",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "mainNavigation": "Main navigation",
+    "mobileNavigation": "Mobile navigation"
+  },
+  "commandPalette": {
+    "placeholder": "Type a command or search…",
+    "open": "Open command palette",
+    "groupNavigation": "Navigation",
+    "groupActions": "Actions",
+    "groupLinks": "Links",
+    "toggleTheme": "Toggle theme",
+    "switchLang": "Switch to French",
+    "copyEmail": "Copy email address",
+    "copied": "Copied!",
+    "viewSource": "View source code",
+    "githubProfile": "GitHub profile",
+    "linkedin": "LinkedIn profile",
+    "empty": "No results found",
+    "resultsOne": "1 result available",
+    "resultsMany": "{count} results available",
+    "hintNavigate": "Navigate",
+    "hintSelect": "Select",
+    "hintClose": "Close"
+  },
+  "hero": {
+    "role": "Full Stack Developer",
+    "tagline": "I turn complex engineering challenges into simple, reliable software.",
+    "downloadCv": "Download CV",
+    "contact": "Contact",
+    "viewGithub": "GitHub"
+  },
+  "about": {
+    "heading": "About",
+    "p1": "A motivated and curious Full Stack developer, always looking for new technologies to learn and challenges to take on. I specialize in TypeScript, Angular and C# .NET.",
+    "p2": "I spent three years at DigiWall, a young SME in Belgium, where I contributed to six applications shipped to production — each for a different company. I built one of them entirely on my own, from analysis and design through development and release to production; it's still used every day across the company. I was also one of the lead developers for a US company based in Flanders — a full year working exclusively in English.",
+    "p3": "I then wanted to take on a new environment, both geographical and professional: I moved to Québec. Despite a tough hiring climate, I managed to catch the eye of a supportive manager who gave me my chance. I'm now part of the large IT team at Beneva, where I build in Angular and TypeScript and ship to production on a regular basis. Although I joined recently, I've received positive feedback several times on my work and my progress."
+  },
+  "now": {
+    "heading": "Now",
+    "lead": "What I'm working on these days.",
+    "work": "At Beneva, I build insurance features used directly by clients through their portal, with a new release shipped every three weeks.",
+    "building": "I design and polish this portfolio, sweating the details on accessibility, performance and craft.",
+    "learning": "I'm refining how I use AI in my day-to-day work, and aiming for a certification on the subject.",
+    "personal": "Away from code, I'm learning the basics of Japanese and planning a trip to Japan."
+  },
+  "skills": {
+    "heading": "Skills",
+    "groups": {
+      "languages": "Languages",
+      "frontend": "Frontend",
+      "backend": "Backend & Data",
+      "cloud": "Cloud & DevOps",
+      "testing": "Testing",
+      "practices": "Practices",
+      "tools": "Tools"
+    }
+  },
+  "projects": {
+    "heading": "Projects",
+    "lead": "A selection of things I've built.",
+    "viewRepo": "View repository",
+    "viewLive": "View live",
+    "placeholderCaption": "Preview coming soon",
+    "descriptions": {
+      "portfolio": "This portfolio itself — a bilingual site that reflects who I am and the way I work."
+    }
+  },
+  "formations": {
+    "heading": "Education & Training",
+    "educationLabel": "Academic background",
+    "coursesLabel": "Completed courses",
+    "degree": "Bachelor in Business Computing",
+    "issued": "Issued",
+    "credentialId": "Credential ID",
+    "viewCertificate": "View certificate"
+  },
+  "recommendations": {
+    "heading": "Recommendations",
+    "lead": "A few words from people I've worked with.",
+    "source": "Sourced from LinkedIn",
+    "relationship": {
+      "leander": "Worked together",
+      "nicolas": "Direct manager"
+    }
+  },
+  "contact": {
+    "heading": "Contact",
+    "lead": "Whether it's about a project, a role, or just to talk shop, you can reach me easily by email or on LinkedIn.",
+    "emailLabel": "Email",
+    "linkedinLabel": "LinkedIn",
+    "githubLabel": "GitHub",
+    "downloadCv": "Download CV"
+  },
+  "footer": {
+    "sourceCode": "Source code",
+    "rights": "All rights reserved."
+  },
+  "notFound": {
+    "backHome": "Back to home",
+    "message": "This page has been pruned by the Time Variance Authority (TVA) to preserve the Sacred Timeline."
+  },
+  "easterEgg": {
+    "message": "You found the Easter Egg",
+    "close": "Close"
+  }
+}

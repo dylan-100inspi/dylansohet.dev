@@ -1,0 +1,26 @@
+---
+import { useTranslations } from '../i18n/translations';
+import type { Locale } from '../i18n/translations';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+---
+
+<section id="about" class="py-16 sm:py-20 lg:py-24">
+  <div class="mx-auto max-w-3xl px-4 sm:px-6" data-reveal-stagger>
+    <h2
+      class="reveal text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl dark:text-slate-50"
+    >
+      {t('about.heading')}
+    </h2>
+    <div class="reveal mt-6 space-y-4 text-lg leading-relaxed text-slate-700 dark:text-slate-300">
+      <p>{t('about.p1')}</p>
+      <p>{t('about.p2')}</p>
+      <p>{t('about.p3')}</p>
+    </div>
+  </div>
+</section>

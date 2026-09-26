@@ -1,0 +1,45 @@
+---
+import { useTranslations } from '../i18n/translations';
+import type { Locale } from '../i18n/translations';
+import { Briefcase, Hammer, Plane, Brain } from '@lucide/astro';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+
+const items = [
+  { icon: Briefcase, text: t('now.work') },
+  { icon: Hammer, text: t('now.building') },
+  { icon: Brain, text: t('now.learning') },
+  { icon: Plane, text: t('now.personal') },
+];
+---
+
+<section id="now" class="bg-slate-100/60 py-16 sm:py-20 lg:py-24 dark:bg-slate-800/30">
+  <div class="mx-auto max-w-3xl px-4 sm:px-6" data-reveal-stagger>
+    <h2
+      class="reveal text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl dark:text-slate-50"
+    >
+      {t('now.heading')}
+    </h2>
+    <p class="reveal mt-3 text-slate-500 dark:text-slate-400">{t('now.lead')}</p>
+
+    <ul class="mt-8 space-y-5">
+      {
+        items.map((item) => (
+          <li class="reveal flex items-start gap-4">
+            <span class="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-teal-500/10 text-teal-600 dark:text-teal-400">
+              <item.icon class="h-5 w-5" />
+            </span>
+            <span class="text-lg leading-relaxed text-slate-700 dark:text-slate-300">
+              {item.text}
+            </span>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
