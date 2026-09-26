@@ -1,0 +1,29 @@
+name: Links
+
+on:
+  pull_request:
+
+concurrency:
+  group: links-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  lychee:
+    name: Broken links
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm build
+      # --root-dir resolves internal links against dist/. Accept external bot-blocks
+      # (LinkedIn 999, Udemy 403/429). Self-domain exclude is scheme-scoped so it
+      # can't also match the runner's "dylansohet.dev" file paths.
+      - uses: lycheeverse/lychee-action@v2
+        with:
+          args: --root-dir "$(pwd)/dist" --exclude 'https://dylansohet\.dev' --accept 200,206,403,429,999 --no-progress "dist/**/*.html"
+          fail: true

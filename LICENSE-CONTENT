@@ -1,0 +1,30 @@
+# Content & Assets License
+
+Copyright (c) 2026 Dylan Sohet. All rights reserved.
+
+The source **code** of this repository is licensed separately under the MIT
+License (see [`LICENSE`](./LICENSE)). This notice covers the **personal content
+and assets** only, which are **not** open source and are **not** covered by the
+MIT License.
+
+## Scope
+
+"Personal content and assets" includes, but is not limited to:
+
+- Written copy, biographical text, and translations (e.g. the contents of `src/i18n/`)
+- Photographs, images, and illustrations (e.g. `src/assets/images/`)
+- The downloadable CV / résumé files (e.g. `public/docs/`)
+- Personal branding, name, and likeness
+
+## Terms
+
+All rights are reserved. You may **read the code and learn from it**, but you may
+**not**, without prior written permission from the copyright holder:
+
+- Copy, redistribute, or republish the personal content or assets, in whole or in part
+- Use the personal content or assets for commercial purposes
+- Create derivative works from the personal content or assets
+- Present the personal content or assets as your own
+
+Nothing in this notice restricts your rights to the source code granted under the
+MIT License.

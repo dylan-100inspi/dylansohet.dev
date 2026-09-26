@@ -1,0 +1,406 @@
+---
+import { useTranslations } from '../i18n/translations';
+import type { Locale } from '../i18n/translations';
+import { sections } from '../config/sections';
+import AnimatedWordmark from './AnimatedWordmark.astro';
+import { Sun, Moon, Search, Command } from '@lucide/astro';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+
+const targetLocale = locale === 'en' ? 'fr' : 'en';
+const targetLabel = locale === 'en' ? 'FR' : 'EN';
+
+const navLinks = sections.flatMap((section) =>
+  section.header
+    ? [
+        {
+          href: `/${locale}/#${section.id}`,
+          label: t(section.labelKey),
+          showClass: section.header.showClass,
+        },
+      ]
+    : [],
+);
+---
+
+<div id="header-sentinel" class="absolute top-0 h-1 w-full"></div>
+
+<header
+  id="site-header"
+  class="fixed top-0 right-0 left-0 z-50 border-b transition-[background-color,border-color,backdrop-filter] duration-300"
+>
+  <div class="mx-auto flex max-w-6xl items-center justify-between px-4 py-3 sm:px-6">
+    <!-- Logo / Name -->
+    <a
+      href={`/${locale}/`}
+      class="rounded-sm text-lg transition-opacity hover:opacity-80 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-teal-400"
+    >
+      <AnimatedWordmark />
+    </a>
+
+    <!-- Desktop nav -->
+    <nav class="hidden items-center gap-6 md:flex" aria-label={t('header.mainNavigation')}>
+      {
+        navLinks.map((link) => (
+          <a
+            href={link.href}
+            class={`hidden rounded-sm text-sm font-medium text-slate-300 transition-colors hover:text-teal-400 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-teal-400 ${link.showClass}`}
+          >
+            {link.label}
+          </a>
+        ))
+      }
+    </nav>
+
+    <!-- Desktop controls -->
+    <div class="hidden items-center gap-2 md:flex">
+      <button
+        type="button"
+        data-command-launcher
+        class="inline-flex items-center gap-2 rounded-lg border border-slate-600 px-2.5 py-1.5 text-slate-300/75 transition-colors hover:border-teal-500/50 hover:text-teal-300 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-500 dark:border-slate-700 dark:text-slate-400"
+        aria-label={t('commandPalette.open')}
+      >
+        <Search class="h-4 w-4" aria-hidden="true" />
+        <kbd
+          class="inline-flex items-center gap-0.5 font-mono text-[10px] dark:text-slate-500"
+          data-command-kbd
+        >
+          <Command class="h-3 w-3" aria-hidden="true" />K
+        </kbd>
+      </button>
+
+      <button
+        id="theme-toggle"
+        type="button"
+        class="rounded-lg p-2 text-slate-300 transition-colors hover:bg-slate-800 hover:text-teal-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-500"
+        aria-label={t('header.toggleTheme')}
+      >
+        <Sun class="hidden h-5 w-5" id="icon-sun" />
+        <Moon class="h-5 w-5" id="icon-moon" />
+      </button>
+
+      <a
+        href={`/${targetLocale}/`}
+        id="lang-switch"
+        class="rounded-lg px-3 py-1.5 text-sm font-medium text-slate-300 transition-colors hover:bg-slate-800 hover:text-teal-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-500"
+        data-target-locale={targetLocale}
+      >
+        {targetLabel}
+      </a>
+    </div>
+
+    <!-- Mobile controls -->
+    <div class="flex items-center gap-1 md:hidden">
+      <button
+        type="button"
+        data-command-launcher
+        class="flex h-10 w-10 items-center justify-center rounded-lg text-slate-300 transition-colors hover:bg-slate-800 hover:text-teal-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-500"
+        aria-label={t('commandPalette.open')}
+      >
+        <Search class="h-5 w-5" aria-hidden="true" />
+      </button>
+
+      <button
+        id="mobile-menu-toggle"
+        type="button"
+        class="relative h-10 w-10 rounded-lg text-slate-300 transition-colors hover:bg-slate-800 hover:text-teal-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-500"
+        aria-label={t('header.openMenu')}
+        aria-expanded="false"
+        data-open-label={t('header.openMenu')}
+        data-close-label={t('header.closeMenu')}
+      >
+        <span class="burger-icon" aria-hidden="true"></span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile panel -->
+  <div
+    id="mobile-menu"
+    class="border-t border-slate-800 bg-slate-900/95 backdrop-blur-md md:hidden"
+    data-state="closed"
+    inert
+  >
+    <nav class="flex flex-col gap-1 px-4 py-3" aria-label={t('header.mobileNavigation')}>
+      {
+        navLinks.map((link) => (
+          <a
+            href={link.href}
+            class="mobile-nav-link rounded-lg px-3 py-2 text-sm font-medium text-slate-300 transition-colors hover:bg-slate-800 hover:text-teal-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-500"
+          >
+            {link.label}
+          </a>
+        ))
+      }
+    </nav>
+
+    <div class="flex items-center gap-2 border-t border-slate-800 px-4 py-3">
+      <button
+        id="theme-toggle-mobile"
+        type="button"
+        class="rounded-lg p-2 text-slate-300 transition-colors hover:bg-slate-800 hover:text-teal-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-500"
+        aria-label={t('header.toggleTheme')}
+      >
+        <Sun class="hidden h-5 w-5" id="icon-sun-mobile" />
+        <Moon class="h-5 w-5" id="icon-moon-mobile" />
+      </button>
+
+      <a
+        href={`/${targetLocale}/`}
+        id="lang-switch-mobile"
+        class="rounded-lg px-3 py-1.5 text-sm font-medium text-slate-300 transition-colors hover:bg-slate-800 hover:text-teal-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-500"
+        data-target-locale={targetLocale}
+      >
+        {targetLabel}
+      </a>
+    </div>
+  </div>
+</header>
+
+<script>
+  let headerController: AbortController | null = null;
+  let headerObserver: IntersectionObserver | null = null;
+
+  function initHeader() {
+    headerController?.abort();
+    headerObserver?.disconnect();
+
+    const controller = new AbortController();
+    const { signal } = controller;
+
+    const header = document.getElementById('site-header');
+    const sentinel = document.getElementById('header-sentinel');
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeToggleMobile = document.getElementById('theme-toggle-mobile');
+    const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    if (!header || !sentinel) return;
+
+    // Glassmorphism → solid on scroll.
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry) return;
+        if (entry.isIntersecting) {
+          header.classList.add('bg-slate-900/80', 'backdrop-blur-md');
+          header.classList.remove('bg-slate-900');
+        } else {
+          header.classList.remove('bg-slate-900/80', 'backdrop-blur-md');
+          header.classList.add('bg-slate-900');
+        }
+      },
+      { threshold: 0 },
+    );
+    observer.observe(sentinel);
+    headerObserver = observer;
+
+    function isMobileMenuOpen() {
+      return mobileMenu?.classList.contains('is-open') ?? false;
+    }
+
+    function setMobileMenuState(nextOpen: boolean) {
+      if (!mobileMenu || !mobileMenuToggle) return;
+      mobileMenu.classList.toggle('is-open', nextOpen);
+      mobileMenu.dataset.state = nextOpen ? 'open' : 'closed';
+      mobileMenu.toggleAttribute('inert', !nextOpen);
+      mobileMenuToggle.setAttribute('aria-expanded', String(nextOpen));
+      const openLabel = mobileMenuToggle.dataset.openLabel ?? 'Open menu';
+      const closeLabel = mobileMenuToggle.dataset.closeLabel ?? 'Close menu';
+      mobileMenuToggle.setAttribute('aria-label', nextOpen ? closeLabel : openLabel);
+    }
+
+    setMobileMenuState(false);
+
+    function syncThemeIcons() {
+      const isDark = document.documentElement.classList.contains('dark');
+      document.getElementById('icon-sun')?.classList.toggle('hidden', isDark);
+      document.getElementById('icon-moon')?.classList.toggle('hidden', !isDark);
+      document.getElementById('icon-sun-mobile')?.classList.toggle('hidden', isDark);
+      document.getElementById('icon-moon-mobile')?.classList.toggle('hidden', !isDark);
+    }
+
+    function toggleTheme() {
+      const isDark = document.documentElement.classList.toggle('dark');
+      localStorage.setItem('theme', isDark ? 'dark' : 'light');
+      syncThemeIcons();
+    }
+
+    syncThemeIcons();
+    themeToggle?.addEventListener('click', toggleTheme, { signal });
+    themeToggleMobile?.addEventListener('click', toggleTheme, { signal });
+
+    mobileMenuToggle?.addEventListener(
+      'click',
+      () => {
+        setMobileMenuState(!isMobileMenuOpen());
+      },
+      { signal },
+    );
+
+    mobileMenu?.querySelectorAll('.mobile-nav-link').forEach((link) => {
+      link.addEventListener(
+        'click',
+        () => {
+          setMobileMenuState(false);
+        },
+        { signal },
+      );
+    });
+
+    // Close mobile menu when tapping outside the panel.
+    document.addEventListener(
+      'pointerdown',
+      (event) => {
+        if (!mobileMenu || !mobileMenuToggle || !isMobileMenuOpen()) return;
+        const target = event.target;
+        if (!(target instanceof Node)) return;
+        if (mobileMenu.contains(target) || mobileMenuToggle.contains(target)) return;
+        setMobileMenuState(false);
+      },
+      { signal },
+    );
+
+    // Ensure the panel closes when leaving the mobile breakpoint.
+    window.addEventListener(
+      'resize',
+      () => {
+        if (window.innerWidth >= 768) {
+          setMobileMenuState(false);
+        }
+      },
+      { signal },
+    );
+
+    // Language switch: preserve hash
+    document.querySelectorAll<HTMLAnchorElement>('[id^="lang-switch"]').forEach((link) => {
+      link.addEventListener(
+        'click',
+        (e) => {
+          e.preventDefault();
+          const targetLocale = link.dataset.targetLocale ?? 'en';
+          const hash = window.location.hash || '';
+          localStorage.setItem('preferredLocale', targetLocale);
+          window.location.href = `/${targetLocale}/${hash}`;
+        },
+        { signal },
+      );
+    });
+
+    headerController = controller;
+  }
+
+  // Run on initial load and on Astro page transitions
+  initHeader();
+  document.addEventListener('astro:after-swap', initHeader);
+</script>
+
+<style>
+  #site-header {
+    border-bottom-color: rgb(30 41 59 / 72%);
+    background-color: rgb(15 23 42 / 78%);
+    backdrop-filter: blur(12px);
+  }
+
+  #mobile-menu {
+    overflow: hidden;
+  }
+
+  .burger-icon,
+  .burger-icon::before,
+  .burger-icon::after {
+    position: absolute;
+    left: 50%;
+    width: 24px;
+    height: 2px;
+    background-color: currentColor;
+  }
+
+  .burger-icon {
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .burger-icon::before,
+  .burger-icon::after {
+    content: '';
+    top: 0;
+    transform: translateX(-50%);
+  }
+
+  .burger-icon::before {
+    top: -7px;
+  }
+
+  .burger-icon::after {
+    top: 7px;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .burger-icon {
+      transition: background-color 0.2s ease;
+    }
+
+    .burger-icon::before,
+    .burger-icon::after {
+      transition:
+        top 0.2s ease,
+        transform 0.2s ease;
+    }
+  }
+
+  #mobile-menu-toggle[aria-expanded='true'] .burger-icon {
+    background-color: transparent;
+  }
+
+  #mobile-menu-toggle[aria-expanded='true'] .burger-icon::before {
+    top: 0;
+    transform: translateX(-50%) rotate(45deg);
+  }
+
+  #mobile-menu-toggle[aria-expanded='true'] .burger-icon::after {
+    top: 0;
+    transform: translateX(-50%) rotate(-45deg);
+  }
+
+  @media (max-width: 767px) and (prefers-reduced-motion: no-preference) {
+    #mobile-menu {
+      --menu-motion-duration: 220ms;
+      --menu-motion-ease: cubic-bezier(0.22, 1, 0.36, 1);
+      --menu-motion-opacity-duration: 180ms;
+      --menu-motion-closed-transform: translateY(-0.4rem);
+      --menu-motion-open-transform: none;
+      --menu-motion-origin: top center;
+      max-height: 0;
+      opacity: 0;
+      pointer-events: none;
+      transform: var(--menu-motion-closed-transform);
+      transform-origin: var(--menu-motion-origin);
+      transition:
+        max-height var(--menu-motion-duration) var(--menu-motion-ease),
+        opacity var(--menu-motion-opacity-duration) ease,
+        transform var(--menu-motion-duration) var(--menu-motion-ease);
+      will-change: max-height, opacity, transform;
+    }
+
+    #mobile-menu.is-open {
+      max-height: 30rem;
+      opacity: 1;
+      pointer-events: auto;
+      transform: var(--menu-motion-open-transform);
+    }
+
+    #mobile-menu {
+      --menu-motion-duration: 260ms;
+      --menu-motion-ease: cubic-bezier(0.16, 1, 0.3, 1);
+      --menu-motion-opacity-duration: 220ms;
+      --menu-motion-closed-transform: translateY(-0.6rem);
+      --menu-motion-open-transform: translateY(0);
+      --menu-motion-origin: top center;
+    }
+  }
+</style>

@@ -1,0 +1,282 @@
+---
+import { useTranslations } from '../../i18n/translations';
+import type { Locale } from '../../i18n/translations';
+import { Search } from '@lucide/astro';
+import CommandItemIcon from './CommandItemIcon.astro';
+import { buildCommandGroups } from './command-items';
+import type { CommandItem } from './command-items';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+const groups = buildCommandGroups(locale);
+
+const listId = 'cmdk-list';
+const inputId = 'cmdk-input';
+---
+
+<dialog class="cmdk-dialog" data-command-palette aria-label={t('commandPalette.open')}>
+  <div class="cmdk-panel">
+    <p
+      class="sr-only"
+      role="status"
+      aria-live="polite"
+      aria-atomic="true"
+      data-cmdk-live
+      data-results-one={t('commandPalette.resultsOne')}
+      data-results-many={t('commandPalette.resultsMany')}
+    >
+    </p>
+
+    <div class="cmdk-search">
+      <Search class="cmdk-search-icon" aria-hidden="true" />
+      <input
+        id={inputId}
+        class="cmdk-input"
+        type="text"
+        role="combobox"
+        aria-expanded="true"
+        aria-controls={listId}
+        aria-autocomplete="list"
+        aria-label={t('commandPalette.placeholder')}
+        placeholder={t('commandPalette.placeholder')}
+        autocomplete="off"
+        spellcheck="false"
+      />
+    </div>
+
+    <ul id={listId} class="cmdk-list" role="listbox" aria-label={t('commandPalette.open')}>
+      {
+        groups.map((group) => (
+          <Fragment>
+            <li class="cmdk-group" role="presentation" data-cmdk-group>
+              {group.label}
+            </li>
+            {group.items.map((item) => (
+              <li
+                id={`cmdk-${item.id}`}
+                class="cmdk-item"
+                role="option"
+                aria-selected="false"
+                data-cmdk-item
+                data-keywords={item.keywords}
+                data-action={item.action}
+                data-href={item.href}
+                data-target-locale={item.targetLocale}
+                data-copy={item.copy}
+              >
+                <CommandItemIcon item={item as CommandItem} />
+                <span
+                  class="cmdk-item-label"
+                  data-copied-label={
+                    item.id === 'copy-email' ? t('commandPalette.copied') : undefined
+                  }
+                >
+                  {item.label}
+                </span>
+                <kbd class="cmdk-item-hint" aria-hidden="true">
+                  ↵
+                </kbd>
+              </li>
+            ))}
+          </Fragment>
+        ))
+      }
+      <li class="cmdk-empty hidden" role="presentation">{t('commandPalette.empty')}</li>
+    </ul>
+
+    <div class="cmdk-footer">
+      <span class="flex items-center gap-1.5">
+        <kbd>↑</kbd><kbd>↓</kbd>{t('commandPalette.hintNavigate')}
+      </span>
+      <span class="flex items-center gap-1.5">
+        <kbd>↵</kbd>{t('commandPalette.hintSelect')}
+      </span>
+      <span class="flex items-center gap-1.5">
+        <kbd>esc</kbd>{t('commandPalette.hintClose')}
+      </span>
+    </div>
+  </div>
+</dialog>
+
+<style>
+  /* Astro scopes this block into its own CSS module — @reference gives @apply access to
+     the shared theme/utilities without re-emitting Tailwind's base styles here. */
+  @reference '../../styles/global.css';
+
+  /* Layered so Tailwind utilities (e.g. `hidden`, toggled by command-palette.ts) can override these rules — unlayered CSS always wins over layered CSS otherwise, regardless of specificity. */
+  @layer components {
+    .cmdk-dialog {
+      margin: 12vh auto auto;
+      width: min(40rem, calc(100vw - 2rem));
+      max-height: min(30rem, 72vh);
+      padding: 0;
+      border: 0;
+      background: transparent;
+      color: inherit;
+      overflow: visible;
+    }
+
+    .cmdk-panel {
+      display: flex;
+      max-height: inherit;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    /* @apply composes Tailwind utilities into real selectors — needed since these
+       classes are toggled by command-palette.ts and can't be inlined on pseudo-elements. */
+    .cmdk-search {
+      @apply flex items-center gap-3 px-4 py-3;
+    }
+
+    .cmdk-search-icon {
+      @apply h-5 w-5 shrink-0;
+    }
+
+    .cmdk-input {
+      @apply w-full border-0 bg-transparent text-sm outline-none;
+    }
+
+    .cmdk-list {
+      @apply flex-1 overflow-y-auto px-2 pb-2;
+      scroll-padding-block: 0.5rem;
+      scrollbar-width: thin;
+      scrollbar-color: color-mix(in srgb, var(--color-slate-400) 45%, transparent) transparent;
+    }
+    .cmdk-list::-webkit-scrollbar {
+      width: 10px;
+    }
+    .cmdk-list::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    .cmdk-list::-webkit-scrollbar-thumb {
+      background-color: color-mix(in srgb, var(--color-slate-400) 45%, transparent);
+      border-radius: 9999px;
+      border: 3px solid transparent;
+      background-clip: padding-box;
+    }
+    .cmdk-list::-webkit-scrollbar-thumb:hover {
+      background-color: color-mix(in srgb, var(--color-slate-400) 65%, transparent);
+    }
+
+    .cmdk-group {
+      @apply px-2 pt-3 pb-1 text-[11px] font-semibold tracking-wider uppercase;
+    }
+
+    .cmdk-item {
+      @apply flex cursor-pointer items-center gap-3 rounded-lg px-3 py-2 text-sm;
+    }
+
+    .cmdk-icon {
+      @apply h-5 w-5 shrink-0;
+    }
+
+    .cmdk-item-label {
+      @apply flex-1 truncate;
+    }
+
+    .cmdk-item-hint {
+      @apply shrink-0 font-mono text-xs opacity-0;
+    }
+
+    .cmdk-item.is-active .cmdk-item-hint {
+      @apply opacity-100;
+    }
+
+    .cmdk-empty {
+      @apply px-3 py-8 text-center text-sm;
+    }
+
+    .cmdk-footer {
+      @apply hidden items-center gap-4 px-4 py-2.5 text-[11px] sm:flex;
+    }
+
+    .cmdk-footer kbd {
+      @apply rounded border px-1.5 py-0.5 font-mono text-[10px];
+    }
+
+    .cmdk-dialog::backdrop {
+      background-color: rgb(15 23 42 / 0.55);
+      backdrop-filter: blur(6px);
+    }
+    .cmdk-panel {
+      @apply rounded-xl bg-white/80 shadow-2xl ring-1 ring-slate-900/10 backdrop-blur-xl dark:bg-slate-800/70 dark:ring-white/10;
+    }
+    .cmdk-search {
+      @apply border-b border-slate-200/80 dark:border-white/10;
+    }
+    .cmdk-search-icon {
+      @apply text-slate-400;
+    }
+    .cmdk-input {
+      @apply text-slate-900 placeholder:text-slate-400 dark:text-slate-100;
+    }
+    .cmdk-group {
+      @apply text-slate-400 dark:text-slate-500;
+    }
+    .cmdk-item {
+      @apply text-slate-600 dark:text-slate-300;
+    }
+    .cmdk-icon {
+      @apply text-slate-400 dark:text-slate-500;
+    }
+    .cmdk-item.is-active {
+      @apply bg-teal-500/10 text-slate-900 dark:text-white;
+    }
+    .cmdk-item.is-active .cmdk-icon {
+      @apply text-teal-500 dark:text-teal-300;
+    }
+    .cmdk-item-hint {
+      @apply text-teal-500 dark:text-teal-300;
+    }
+    .cmdk-empty {
+      @apply text-slate-400 dark:text-slate-500;
+    }
+    .cmdk-footer {
+      @apply border-t border-slate-200/80 text-slate-400 dark:border-white/10 dark:text-slate-500;
+    }
+    .cmdk-footer kbd {
+      @apply border-slate-200 text-slate-500 dark:border-white/10 dark:text-slate-400;
+    }
+
+    /* Open/close motion — entry via @starting-style, exit via the `is-closing`
+       class set by the controller. Content stays fully visible under reduced motion. */
+    @media (prefers-reduced-motion: no-preference) {
+      .cmdk-panel {
+        transition:
+          opacity 0.16s ease,
+          transform 0.16s ease;
+      }
+
+      @starting-style {
+        .cmdk-dialog[open] .cmdk-panel {
+          opacity: 0;
+          transform: translateY(-0.5rem) scale(0.98);
+        }
+      }
+
+      .cmdk-dialog.is-closing .cmdk-panel {
+        opacity: 0;
+        transform: translateY(-0.5rem) scale(0.98);
+      }
+
+      .cmdk-dialog::backdrop {
+        transition: opacity 0.16s ease;
+      }
+
+      @starting-style {
+        .cmdk-dialog[open]::backdrop {
+          opacity: 0;
+        }
+      }
+
+      .cmdk-dialog.is-closing::backdrop {
+        opacity: 0;
+      }
+    }
+  }
+</style>

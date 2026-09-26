@@ -1,0 +1,24 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import HeroSection from '../../components/HeroSection.astro';
+import AboutSection from '../../components/AboutSection.astro';
+import NowSection from '../../components/NowSection.astro';
+import SkillsSection from '../../components/SkillsSection.astro';
+import ProjectsSection from '../../components/projects/ProjectsSection.astro';
+import FormationsSection from '../../components/FormationsSection.astro';
+import RecommendationsSection from '../../components/RecommendationsSection.astro';
+import ContactSection from '../../components/ContactSection.astro';
+
+const locale = 'en';
+---
+
+<BaseLayout locale={locale}>
+  <HeroSection locale={locale} />
+  <AboutSection locale={locale} />
+  <NowSection locale={locale} />
+  <SkillsSection locale={locale} />
+  <ProjectsSection locale={locale} />
+  <FormationsSection locale={locale} />
+  <RecommendationsSection locale={locale} />
+  <ContactSection locale={locale} />
+</BaseLayout>

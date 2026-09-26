@@ -1,0 +1,99 @@
+@import 'tailwindcss';
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme inline {
+  --font-sans: var(--font-satoshi);
+  --font-mono: var(--font-geist-mono);
+}
+
+/* Color tokens override Tailwind v4's runtime color variables so the existing
+  utility classes keep working across all components. Base (:root) holds the dark
+  palette — the default theme rendered on first paint; `html:not(.dark)` overrides
+  it with the light palette (tuned for stronger contrast). slate-700..950 are
+  theme-invariant and equal Tailwind's defaults, so they are intentionally omitted
+  here and inherited. */
+
+:root {
+  --color-slate-50: #f8fafc;
+  --color-slate-100: #f1f5f9;
+  --color-slate-200: #e2e8f0;
+  --color-slate-300: #cbd5e1;
+  --color-slate-400: #94a3b8;
+  --color-slate-500: #64748b;
+  --color-slate-600: #475569;
+  --color-teal-300: #5eead4;
+  --color-teal-400: #2dd4bf;
+  --color-teal-500: #14b8a6;
+  --color-teal-600: #0d9488;
+}
+
+html:not(.dark) {
+  --color-slate-50: #f7fafc;
+  --color-slate-100: #eef2f6;
+  --color-slate-200: #dce5ee;
+  --color-slate-300: #c3d0de;
+  --color-slate-400: #6f8297;
+  --color-slate-500: #566b81;
+  --color-slate-600: #44586f;
+  --color-teal-300: #58d8cc;
+  --color-teal-400: #2ec4b6;
+  --color-teal-500: #0e9389;
+  --color-teal-600: #0b7b73;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+section[id] {
+  scroll-margin-top: 5rem;
+}
+
+/* Locks page scroll while the Konami easter-egg overlay is open. */
+html.egg-open {
+  overflow: hidden;
+}
+
+/* Shared scroll/load reveal. The hidden state is armed by the `reveal-enabled`
+   class (added inline before paint) so content stays visible with JS off or
+   reduced motion. Elements inside `[data-reveal-stagger]` are delayed by index. */
+.reveal-enabled .reveal {
+  opacity: 0;
+  transform: translateY(1rem);
+}
+
+.reveal-enabled .reveal.is-visible {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 0.5s ease,
+    transform 0.5s ease;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .download-cta.is-downloading .download-cta-icon {
+    animation: download-drop 0.55s ease;
+  }
+}
+
+@keyframes download-drop {
+  0% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  45% {
+    transform: translateY(2.5em);
+    opacity: 0;
+  }
+  46% {
+    transform: translateY(-2.5em);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}

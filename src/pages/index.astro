@@ -1,0 +1,25 @@
+---
+// Root redirect — detects browser language, respects stored preference
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <meta http-equiv="refresh" content="0;url=/en/" />
+    <title>Redirecting…</title>
+    <script is:inline>
+      (function () {
+        const stored = localStorage.getItem('preferredLocale');
+        const browserLang = navigator.language || '';
+        const locale =
+          stored === 'fr' || stored === 'en' ? stored : browserLang.startsWith('fr') ? 'fr' : 'en';
+        const hash = window.location.hash || '';
+        window.location.replace('/' + locale + '/' + hash);
+      })();
+    </script>
+  </head>
+  <body></body>
+</html>

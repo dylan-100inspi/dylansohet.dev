@@ -1,0 +1,42 @@
+---
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import { ImageOff } from '@lucide/astro';
+import { useTranslations } from '../../i18n/translations';
+import type { Locale } from '../../i18n/translations';
+
+export type ProjectScreenshot =
+  | { readonly kind: 'image'; readonly asset: ImageMetadata }
+  | { readonly kind: 'localized'; readonly src: Readonly<Record<Locale, string>> };
+
+interface Props {
+  readonly locale: Locale;
+  readonly alt: string;
+  readonly screenshot?: ProjectScreenshot | undefined;
+}
+
+const { locale, alt, screenshot } = Astro.props;
+const t = useTranslations(locale);
+---
+
+<div class="aspect-video w-full overflow-hidden bg-slate-100 dark:bg-slate-800">
+  {
+    screenshot?.kind === 'image' ? (
+      <Image src={screenshot.asset} alt={alt} class="h-full w-full object-cover" />
+    ) : screenshot?.kind === 'localized' ? (
+      <img
+        src={screenshot.src[locale]}
+        alt={alt}
+        width="1200"
+        height="630"
+        loading="lazy"
+        class="h-full w-full object-cover"
+      />
+    ) : (
+      <div class="flex h-full w-full flex-col items-center justify-center gap-2 text-slate-400 dark:text-slate-600">
+        <ImageOff class="h-8 w-8" aria-hidden="true" />
+        <span class="text-xs font-medium">{t('projects.placeholderCaption')}</span>
+      </div>
+    )
+  }
+</div>

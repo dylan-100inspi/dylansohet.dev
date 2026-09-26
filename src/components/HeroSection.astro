@@ -1,0 +1,220 @@
+---
+import { Picture } from 'astro:assets';
+import { useTranslations } from '../i18n/translations';
+import type { Locale } from '../i18n/translations';
+import { Download, Mail } from '@lucide/astro';
+import profileImage from '../assets/images/profile.jpeg';
+import GithubIcon from '../assets/icons/github.svg';
+import { author } from '../config/site';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+
+const techTags = ['TypeScript', 'Angular', 'C# .NET', 'Git', 'CI/CD'];
+---
+
+<section
+  id="home"
+  class="relative flex min-h-svh flex-col justify-center overflow-hidden pt-28 pb-16 sm:pt-32 sm:pb-20 lg:pt-32 lg:pb-24"
+>
+  <!-- Ambient "aurora" backdrop: purely decorative, sits behind content. -->
+  <div class="hero-aurora pointer-events-none absolute inset-0 -z-10" aria-hidden="true">
+    <span class="hero-aurora__blob hero-aurora__blob--a"></span>
+    <span class="hero-aurora__blob hero-aurora__blob--b"></span>
+    <span class="hero-aurora__blob hero-aurora__blob--c"></span>
+  </div>
+
+  <div class="mx-auto max-w-6xl px-4 sm:px-6">
+    <div
+      class="flex flex-col items-center gap-10 lg:flex-row lg:items-center lg:gap-16"
+      data-reveal-stagger
+    >
+      <!-- Photo (top on mobile, right on desktop) -->
+      <div class="reveal order-first flex shrink-0 justify-center lg:order-last">
+        <div class="relative">
+          <Picture
+            src={profileImage}
+            formats={['avif', 'webp']}
+            alt={author.fullName}
+            width={280}
+            height={280}
+            class="h-48 w-48 rounded-full object-cover ring-4 ring-teal-500/30 sm:h-56 sm:w-56 lg:h-72 lg:w-72"
+            loading="eager"
+            fetchpriority="high"
+            data-easter-egg-trigger
+          />
+          <div
+            class="absolute -inset-1 -z-10 rounded-full bg-gradient-to-br from-teal-500/20 to-transparent blur-2xl"
+          >
+          </div>
+        </div>
+      </div>
+
+      <!-- Text content -->
+      <div class="flex-1 text-center lg:text-left">
+        <h1
+          class="reveal text-4xl font-bold tracking-tight text-slate-900 sm:text-5xl lg:text-6xl dark:text-slate-50"
+        >
+          {author.fullName}
+        </h1>
+
+        <p class="reveal mt-3 text-xl font-medium text-teal-600 sm:text-2xl dark:text-teal-400">
+          {t('hero.role')}
+        </p>
+
+        <p class="reveal mt-4 max-w-xl text-lg leading-relaxed text-slate-600 dark:text-slate-400">
+          {t('hero.tagline')}
+        </p>
+
+        <!-- Tech tags -->
+        <div class="reveal mt-6 flex flex-wrap justify-center gap-2 lg:justify-start">
+          {
+            techTags.map((tag) => (
+              <span class="rounded-full border border-slate-300/80 bg-slate-200/70 px-3 py-1 text-sm font-semibold text-slate-800 dark:border-slate-700 dark:bg-slate-800 dark:font-medium dark:text-teal-400">
+                {tag}
+              </span>
+            ))
+          }
+        </div>
+
+        <!-- Action links -->
+        <div class="reveal mt-8 flex flex-wrap justify-center gap-3 lg:justify-start">
+          <a
+            href={`/docs/cv-${locale}.pdf`}
+            download
+            class="download-cta inline-flex items-center gap-2 overflow-hidden rounded-lg bg-teal-500 px-5 py-2.5 text-sm font-semibold text-slate-900 shadow-sm transition-all duration-150 hover:bg-teal-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-500 motion-safe:active:translate-y-px motion-safe:active:shadow-none"
+          >
+            <Download class="download-cta-icon h-4 w-4" />
+            {t('hero.downloadCv')}
+          </a>
+
+          <a
+            href={`/${locale}/#contact`}
+            class="inline-flex items-center gap-2 rounded-lg border border-slate-300 bg-transparent px-5 py-2.5 text-sm font-semibold text-slate-700 shadow-sm transition-all duration-150 hover:bg-slate-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-500 motion-safe:active:translate-y-px motion-safe:active:shadow-none dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800"
+          >
+            <Mail class="h-4 w-4" />
+            {t('hero.contact')}
+          </a>
+
+          <a
+            href={author.github}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 rounded-lg border border-slate-300 bg-transparent px-5 py-2.5 text-sm font-semibold text-slate-700 shadow-sm transition-all duration-150 hover:bg-slate-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-500 motion-safe:active:translate-y-px motion-safe:active:shadow-none dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800"
+          >
+            <GithubIcon class="h-4 w-4" />
+            {t('hero.viewGithub')}
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Fade the aurora at its top/bottom edges so it dissolves instead of
+     showing a hard seam against the header and the next section. */
+  .hero-aurora {
+    -webkit-mask-image: linear-gradient(
+      to bottom,
+      transparent 0%,
+      #000 16%,
+      #000 72%,
+      transparent 100%
+    );
+    mask-image: linear-gradient(to bottom, transparent 0%, #000 16%, #000 72%, transparent 100%);
+  }
+
+  .hero-aurora__blob {
+    position: absolute;
+    border-radius: 9999px;
+    filter: blur(80px);
+    will-change: transform;
+  }
+
+  .hero-aurora__blob--a {
+    top: -8%;
+    left: 6%;
+    width: 42vw;
+    height: 42vw;
+    background: radial-gradient(circle at 30% 30%, var(--color-teal-500, #14b8a6), transparent 70%);
+    opacity: 0.28;
+    animation: hero-aurora-a 22s ease-in-out infinite alternate;
+  }
+
+  .hero-aurora__blob--b {
+    right: 4%;
+    bottom: -12%;
+    width: 38vw;
+    height: 38vw;
+    background: radial-gradient(circle at 60% 40%, var(--color-cyan-500, #06b6d4), transparent 70%);
+    opacity: 0.2;
+    animation: hero-aurora-b 28s ease-in-out infinite alternate;
+  }
+
+  .hero-aurora__blob--c {
+    top: 28%;
+    left: 42%;
+    width: 30vw;
+    height: 30vw;
+    background: radial-gradient(circle at 50% 50%, var(--color-teal-400, #2dd4bf), transparent 70%);
+    opacity: 0.16;
+    animation: hero-aurora-c 34s ease-in-out infinite alternate;
+  }
+
+  :global(html:not(.dark)) .hero-aurora {
+    display: none;
+  }
+
+  /* On tall, narrow phone screens the width-based blobs look sparse, so
+     enlarge them to fill the full-height hero as they do on desktop. */
+  @media (max-width: 640px) {
+    .hero-aurora__blob--a {
+      width: 85vw;
+      height: 85vw;
+    }
+    .hero-aurora__blob--b {
+      width: 78vw;
+      height: 78vw;
+    }
+    .hero-aurora__blob--c {
+      width: 68vw;
+      height: 68vw;
+    }
+  }
+
+  @keyframes hero-aurora-a {
+    from {
+      transform: translate3d(0, 0, 0) scale(1);
+    }
+    to {
+      transform: translate3d(16%, 18%, 0) scale(1.25);
+    }
+  }
+  @keyframes hero-aurora-b {
+    from {
+      transform: translate3d(0, 0, 0) scale(1.15);
+    }
+    to {
+      transform: translate3d(-18%, -14%, 0) scale(1);
+    }
+  }
+  @keyframes hero-aurora-c {
+    from {
+      transform: translate3d(0, 0, 0) scale(1);
+    }
+    to {
+      transform: translate3d(-14%, 16%, 0) scale(1.3);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-aurora__blob {
+      animation: none;
+    }
+  }
+</style>

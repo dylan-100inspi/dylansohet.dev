@@ -1,0 +1,205 @@
+---
+import { Font } from 'astro:assets';
+import { House } from '@lucide/astro';
+import { useTranslations } from '../i18n/translations';
+import type { Locale } from '../i18n/translations';
+import lokiAnimation from '../assets/images/loki.webp';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+
+const digits = ['4', '0', '4'];
+---
+
+<!-- Loki-style display faces, loaded only on the 404 route. -->
+<Font cssVariable="--font-loki-kirang" />
+<Font cssVariable="--font-loki-indie" />
+<Font cssVariable="--font-loki-rye" />
+<Font cssVariable="--font-loki-amatic" />
+<Font cssVariable="--font-loki-bangers" />
+<Font cssVariable="--font-loki-fredericka" />
+
+<section
+  class="not-found relative flex min-h-[70vh] flex-1 flex-col items-center justify-center overflow-hidden px-4 pt-12 pb-4 text-center"
+  data-analytics-404
+>
+  <!-- TVA hourglass watermark (recolored + faded from the original gold motif) -->
+  <div class="tva-pattern" aria-hidden="true">
+    <svg width="100%" height="100%">
+      <pattern
+        id="tva-hourglass-pattern"
+        x="0"
+        y="0"
+        patternUnits="userSpaceOnUse"
+        width="129"
+        height="134"
+        viewBox="0 0 86 89"
+      >
+        <g class="tva-hourglasses">
+          <polygon
+            points="23.13 27.926 30.115 40.025 13.886 40.025 37 0 7 0 18.575 20.047 20.87 16.071 13.886 3.975 30.115 3.975 7 44 37 44 25.425 23.951 23.13 27.926"
+          ></polygon>
+          <polygon
+            points="58.266 23.13 46.168 30.115 46.168 13.886 86.193 37 86.193 7 66.146 18.575 70.121 20.87 82.218 13.886 82.218 30.115 42.193 7 42.193 37 62.241 25.425 58.266 23.13"
+          ></polygon>
+          <polygon
+            points="63.062 61.053 56.077 48.954 72.307 48.954 49.193 88.979 79.193 88.979 67.618 68.933 65.323 72.908 72.307 85.004 56.077 85.004 79.193 44.979 49.193 44.979 60.767 65.028 63.062 61.053"
+          ></polygon>
+          <polygon
+            points="27.926 65.849 40.025 58.864 40.025 75.093 0 51.979 0 81.979 20.047 70.405 16.071 68.109 3.975 75.093 3.975 58.864 44 81.979 44 51.979 23.951 63.554 27.926 65.849"
+          ></polygon>
+        </g>
+      </pattern>
+      <rect x="0" y="0" width="100%" height="100%" fill="url(#tva-hourglass-pattern)"></rect>
+    </svg>
+  </div>
+
+  <div class="relative z-10 flex flex-col items-center">
+    <div class="loki-stage">
+      <img
+        src={lokiAnimation.src}
+        width={lokiAnimation.width}
+        height={lokiAnimation.height}
+        alt=""
+        aria-hidden="true"
+        class="loki-gif"
+      />
+      <div class="loki-404" role="img" aria-label="404">
+        {
+          digits.map((d) => (
+            <span class="letter" aria-hidden="true">
+              {d}
+            </span>
+          ))
+        }
+      </div>
+    </div>
+
+    <p class="mt-6 max-w-md font-mono text-base text-slate-600 sm:text-lg dark:text-slate-400">
+      {t('notFound.message')}
+    </p>
+
+    <a
+      href={`/${locale}/`}
+      class="mt-8 inline-flex items-center gap-2 rounded-lg bg-teal-500 px-5 py-2.5 text-sm font-semibold text-slate-900 shadow-sm transition-all duration-150 hover:bg-teal-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-500 motion-safe:active:translate-y-px motion-safe:active:shadow-none"
+    >
+      <House class="h-4 w-4" />
+      {t('notFound.backHome')}
+    </a>
+  </div>
+</section>
+
+<script>
+  let fontRollInterval: number | null = null;
+
+  function clearFontRollInterval() {
+    if (fontRollInterval === null) return;
+    window.clearInterval(fontRollInterval);
+    fontRollInterval = null;
+  }
+
+  const fonts = [
+    'var(--font-loki-kirang)',
+    'var(--font-loki-indie)',
+    'var(--font-loki-rye)',
+    'var(--font-loki-amatic)',
+    'var(--font-loki-bangers)',
+    'var(--font-loki-fredericka)',
+  ];
+
+  const letters = document.querySelectorAll<HTMLElement>('.loki-404 .letter');
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (prefersReducedMotion) {
+    letters.forEach((letter) => (letter.style.fontFamily = 'var(--font-loki-bangers)'));
+  } else {
+    const roll = () =>
+      letters.forEach((letter) => {
+        const nextFont = fonts[Math.floor(Math.random() * fonts.length)];
+        if (nextFont) letter.style.fontFamily = nextFont;
+      });
+
+    clearFontRollInterval();
+    fontRollInterval = window.setInterval(roll, 350);
+  }
+
+  window.addEventListener('pagehide', clearFontRollInterval, { once: true });
+  document.addEventListener('astro:before-swap', clearFontRollInterval);
+</script>
+
+<style>
+  .tva-pattern {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    color: var(--color-slate-500);
+    opacity: 0.05;
+    pointer-events: none;
+    -webkit-mask-image: linear-gradient(
+      to right,
+      transparent 0%,
+      #000 20%,
+      #000 80%,
+      transparent 100%
+    );
+    mask-image: linear-gradient(to right, transparent 0%, #000 20%, #000 80%, transparent 100%);
+  }
+  .tva-hourglasses {
+    fill: currentColor;
+  }
+
+  .loki-stage {
+    position: relative;
+    /* Cap by viewport height too, so short screens keep room for the footer. */
+    width: min(85vw, 44rem, 66vh);
+    aspect-ratio: 540 / 385;
+  }
+  .loki-gif {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    opacity: 0.4;
+    pointer-events: none;
+  }
+
+  .loki-404 {
+    position: absolute;
+    right: 0;
+    bottom: 6%;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: clamp(0.75rem, 5vw, 2.5rem);
+    font-size: clamp(4.5rem, 16vw, 9rem);
+    line-height: 1;
+    font-weight: 700;
+  }
+  /* Initial face before the roll script runs (avoids a default-sans flash). */
+  .letter {
+    font-family: var(--font-loki-bangers);
+    color: #0f172a; /* slate-900, legible in light mode */
+    text-shadow: 0 1px 2px rgb(15 23 42 / 0.15);
+  }
+
+  :global(.dark) .letter {
+    color: #ffffffda;
+    text-shadow:
+      0 0 0.4em #ffffffda,
+      0 0 0.5em #ffffffda,
+      0 0 0.25em #ffffffda;
+    mix-blend-mode: screen;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .loki-gif {
+      display: none;
+    }
+  }
+</style>

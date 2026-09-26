@@ -1,0 +1,188 @@
+---
+// Section scroll-spy: highlights the active header link and the matching dot in the side rail.
+import { useTranslations } from '../i18n/translations';
+import type { Locale } from '../i18n/translations';
+import { sections } from '../config/sections';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+---
+
+<nav
+  class="fixed top-1/2 right-5 z-40 hidden -translate-y-1/2 flex-col gap-3 lg:flex"
+  aria-label={t('a11y.sectionProgress')}
+>
+  {
+    sections.map((section) => (
+      <a
+        href={`/${locale}/#${section.id}`}
+        data-dot={section.id}
+        aria-label={t(section.labelKey)}
+        class="nav-dot flex items-center justify-end py-1"
+      >
+        <span class="nav-dot__mark size-2.5 rounded-full bg-slate-400/50" />
+      </a>
+    ))
+  }
+</nav>
+
+<script>
+  let sectionSpyController: AbortController | null = null;
+
+  function initSectionSpy() {
+    sectionSpyController?.abort();
+    const controller = new AbortController();
+    const { signal } = controller;
+
+    const sectionEls = Array.from(document.querySelectorAll<HTMLElement>('main section[id]'));
+    const dots = Array.from(document.querySelectorAll<HTMLElement>('[data-dot]'));
+    const headerLinks = Array.from(
+      document.querySelectorAll<HTMLAnchorElement>('#site-header nav a[href*="#"]'),
+    );
+    if (sectionEls.length === 0) return;
+
+    function setActive(id: string) {
+      dots.forEach((dot) => dot.classList.toggle('is-active', dot.dataset.dot === id));
+      headerLinks.forEach((link) => {
+        const active = link.getAttribute('href')?.endsWith(`#${id}`) ?? false;
+        link.classList.toggle('is-active', active);
+        if (active) link.setAttribute('aria-current', 'page');
+        else link.removeAttribute('aria-current');
+      });
+    }
+
+    // Active section = the one under the viewport's vertical midpoint, i.e. the section
+    // currently filling the middle of the screen (what the reader is actually looking at).
+    let ticking = false;
+    function computeActive() {
+      ticking = false;
+      const line = window.innerHeight / 2;
+      let activeId = sectionEls[0]!.id;
+      for (const el of sectionEls) {
+        if (el.getBoundingClientRect().top <= line) activeId = el.id;
+        else break;
+      }
+      // Force the last section active once scrolled to the very bottom of the page.
+      const atBottom =
+        window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2;
+      if (atBottom) activeId = sectionEls[sectionEls.length - 1]!.id;
+      setActive(activeId);
+    }
+
+    function onScroll() {
+      if (lockedId !== null || ticking) return;
+      ticking = true;
+      requestAnimationFrame(computeActive);
+    }
+
+    // Clicking a nav link/dot lights the target instantly and locks the spy until the
+    // smooth scroll settles, so the indicator never lags behind or flickers en route.
+    let lockedId: string | null = null;
+    let unlockTimer: number | undefined;
+
+    function releaseLock() {
+      if (lockedId === null) return;
+      lockedId = null;
+      window.clearTimeout(unlockTimer);
+      computeActive();
+    }
+
+    function idFromAnchor(anchor: HTMLElement): string | null {
+      if (anchor.dataset.dot) return anchor.dataset.dot;
+      const href = anchor.getAttribute('href');
+      const hashIndex = href?.indexOf('#') ?? -1;
+      return hashIndex === -1 ? null : href!.slice(hashIndex + 1) || null;
+    }
+
+    function onNavClick(event: MouseEvent) {
+      if (!(event.target instanceof Element)) return;
+      const anchor = event.target.closest<HTMLElement>('[data-dot], #site-header nav a[href*="#"]');
+      if (!anchor) return;
+      const id = idFromAnchor(anchor);
+      if (!id || !sectionEls.some((el) => el.id === id)) return;
+      lockedId = id;
+      setActive(id);
+      window.clearTimeout(unlockTimer);
+      unlockTimer = window.setTimeout(releaseLock, 700);
+    }
+
+    const manualScrollKeys = new Set(['ArrowUp', 'ArrowDown', 'PageUp', 'PageDown', 'Home', 'End']);
+    function onManualScrollKey(event: KeyboardEvent) {
+      if (manualScrollKeys.has(event.key)) releaseLock();
+    }
+
+    computeActive();
+    window.addEventListener('scroll', onScroll, { passive: true, signal });
+    window.addEventListener('resize', onScroll, { signal });
+    document.addEventListener('click', onNavClick, { signal });
+    window.addEventListener('scrollend', releaseLock, { signal });
+    window.addEventListener('wheel', releaseLock, { passive: true, signal });
+    window.addEventListener('touchstart', releaseLock, { passive: true, signal });
+    window.addEventListener('keydown', onManualScrollKey, { signal });
+
+    sectionSpyController = controller;
+  }
+
+  initSectionSpy();
+  document.addEventListener('astro:after-swap', initSectionSpy);
+</script>
+
+<style is:global>
+  /* Active dot in the side rail */
+  .nav-dot__mark {
+    transition:
+      transform 0.25s ease,
+      background-color 0.25s ease;
+  }
+  .nav-dot.is-active .nav-dot__mark {
+    background: var(--color-teal-500, #14b8a6);
+    transform: scale(1.35);
+  }
+
+  /* Desktop header link: sliding underline under the label. */
+  #site-header nav a {
+    position: relative;
+  }
+  #site-header nav a:not(.mobile-nav-link)::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    bottom: -4px;
+    left: 0;
+    height: 2px;
+    background: var(--color-teal-400, #2dd4bf);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.25s ease;
+  }
+  #site-header nav a:not(.mobile-nav-link).is-active::after {
+    transform: scaleX(1);
+  }
+
+  /* Mobile menu active link: accent text + a short left bar (avoids a full-width underline). */
+  #mobile-menu .mobile-nav-link.is-active {
+    color: var(--color-teal-400, #2dd4bf);
+  }
+  #mobile-menu .mobile-nav-link.is-active::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    height: 1rem;
+    width: 3px;
+    transform: translateY(-50%);
+    border-radius: 9999px;
+    background: var(--color-teal-400, #2dd4bf);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .nav-dot__mark,
+    #site-header nav a:not(.mobile-nav-link)::after {
+      transition: none !important;
+    }
+  }
+</style>
