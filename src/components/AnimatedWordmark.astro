@@ -12,7 +12,9 @@ const { class: className = '' } = Astro.props;
 ---
 
 <span class:list={['wm', className]} data-wm aria-label={author.fullName}>
-  <span class="wm-word wm-left" aria-hidden="true">DYLAN</span>
+  <span class="wm-word wm-left" aria-hidden="true">
+    DYLAN
+  </span>
   <svg class="wm-code" viewBox="0 0 44 24" aria-hidden="true">
     <path
       class="wm-chevron"
@@ -21,14 +23,16 @@ const { class: className = '' } = Astro.props;
       stroke="currentColor"
       stroke-width="3"
       stroke-linecap="round"
-      stroke-linejoin="round"></path>
+      stroke-linejoin="round"
+    ></path>
     <path
       class="wm-slash"
       d="M26 3 L18 21"
       fill="none"
       stroke="currentColor"
       stroke-width="3"
-      stroke-linecap="round"></path>
+      stroke-linecap="round"
+    ></path>
     <path
       class="wm-chevron"
       d="M30 5 L39 12 L30 19"
@@ -36,9 +40,12 @@ const { class: className = '' } = Astro.props;
       stroke="currentColor"
       stroke-width="3"
       stroke-linecap="round"
-      stroke-linejoin="round"></path>
+      stroke-linejoin="round"
+    ></path>
   </svg>
-  <span class="wm-word wm-right" aria-hidden="true">SOHET</span>
+  <span class="wm-word wm-right" aria-hidden="true">
+    SOHET
+  </span>
 </span>
 
 <style>

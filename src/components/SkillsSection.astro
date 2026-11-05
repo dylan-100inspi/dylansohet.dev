@@ -47,47 +47,45 @@ const groups = [
       class="mt-8 overflow-hidden rounded-xl border border-slate-200 shadow-sm dark:border-slate-800"
     >
       <!-- Title bar -->
-      <div
-        class="flex items-center gap-2 border-b border-slate-200 bg-slate-100 px-4 py-3 dark:border-slate-800 dark:bg-slate-900"
-      >
+      <div class="flex items-center gap-2 border-b border-slate-200 bg-slate-100 px-4 py-3 dark:border-slate-800 dark:bg-slate-900">
         <span class="h-3 w-3 rounded-full bg-red-400/80" aria-hidden="true"></span>
         <span class="h-3 w-3 rounded-full bg-amber-400/80" aria-hidden="true"></span>
         <span class="h-3 w-3 rounded-full bg-green-400/80" aria-hidden="true"></span>
-        <span class="ml-2 font-mono text-xs text-slate-500 dark:text-slate-400"
-          >dylan@portfolio: ~/skills</span
-        >
+        <span class="ml-2 font-mono text-xs text-slate-500 dark:text-slate-400">
+          dylan@portfolio: ~/skills
+        </span>
       </div>
 
       <!-- Body -->
       <div class="bg-white px-4 py-5 font-mono text-sm leading-relaxed sm:px-6 dark:bg-slate-950">
         <p class="text-slate-500 dark:text-slate-400">
-          <span class="text-teal-600 dark:text-teal-400" aria-hidden="true">$</span>
+          <span class="text-teal-600 dark:text-teal-400" aria-hidden="true">
+            $
+          </span>
           <span data-typing> skills --grouped</span>
         </p>
 
         <dl class="mt-4 space-y-4">
-          {
-            groups.map((group) => (
-              <div data-reveal>
-                <dt class="font-semibold text-teal-600 dark:text-teal-400">
-                  <span class="text-slate-400 select-none dark:text-slate-600" aria-hidden="true">
-                    ▸{' '}
-                  </span>
-                  {group.label}
-                </dt>
-                <dd class="mt-1.5 flex flex-wrap gap-x-4 gap-y-1.5 pl-4">
-                  {group.items.map((item) => (
-                    <span class="text-slate-700 dark:text-slate-300">
-                      <span class="text-teal-500/50 select-none" aria-hidden="true">
-                        ·{' '}
-                      </span>
-                      {item}
+          {groups.map((group) => (
+            <div data-reveal>
+              <dt class="font-semibold text-teal-600 dark:text-teal-400">
+                <span class="text-slate-400 select-none dark:text-slate-600" aria-hidden="true">
+                  ▸{' '}
+                </span>
+                {group.label}
+              </dt>
+              <dd class="mt-1.5 flex flex-wrap gap-x-4 gap-y-1.5 pl-4">
+                {group.items.map((item) => (
+                  <span class="text-slate-700 dark:text-slate-300">
+                    <span class="text-teal-500/50 select-none" aria-hidden="true">
+                      ·{' '}
                     </span>
-                  ))}
-                </dd>
-              </div>
-            ))
-          }
+                    {item}
+                  </span>
+                ))}
+              </dd>
+            </div>
+          ))}
         </dl>
 
         <p

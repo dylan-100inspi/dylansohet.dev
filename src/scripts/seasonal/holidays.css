@@ -1,0 +1,119 @@
+.holiday-snow {
+  position: absolute;
+  inset: 0;
+  color: #e2e8f0;
+}
+
+html:not(.dark) .holiday-snow {
+  color: #94a3b8;
+}
+
+.holiday-flake {
+  position: absolute;
+  top: -5%;
+  left: var(--x);
+  animation: holiday-fall var(--fall) linear var(--delay) infinite;
+}
+
+.holiday-flake > span {
+  display: block;
+  width: var(--size);
+  height: var(--size);
+  border-radius: 50%;
+  background-color: currentColor;
+  opacity: var(--opacity);
+  animation: holiday-drift calc(var(--fall) / 3) ease-in-out var(--delay) infinite alternate;
+}
+
+.holiday-snow--far {
+  --size: 3px;
+  --opacity: 0.35;
+}
+
+.holiday-snow--mid {
+  --size: 5px;
+  --opacity: 0.55;
+}
+
+.holiday-snow--near {
+  --size: 7px;
+  --opacity: 0.8;
+}
+
+@media (max-width: 480px) {
+  .holiday-flake:nth-child(n + 6) {
+    display: none;
+  }
+}
+
+@keyframes holiday-fall {
+  to {
+    transform: translate3d(0, 110cqh, 0);
+  }
+}
+
+@keyframes holiday-drift {
+  from {
+    transform: translateX(calc(var(--drift) * -0.5));
+  }
+  to {
+    transform: translateX(var(--drift));
+  }
+}
+
+.holiday-lights {
+  position: absolute;
+  inset: -14px;
+  container-type: inline-size;
+}
+
+.holiday-light {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 8px;
+  height: 8px;
+  margin: -4px 0 0 -4px;
+  border-radius: 50%;
+  background-color: #14b8a6;
+  box-shadow: 0 0 8px 1px currentColor;
+  color: #14b8a6;
+  transform: rotate(var(--angle)) translateY(-50cqw);
+  animation: holiday-twinkle 2.4s ease-in-out var(--delay) infinite alternate;
+}
+
+.holiday-light:nth-child(3n + 2) {
+  background-color: #f59e0b;
+  color: #f59e0b;
+}
+
+.holiday-light:nth-child(3n) {
+  background-color: #f8fafc;
+  color: #f8fafc;
+}
+
+html:not(.dark) .holiday-light:nth-child(3n) {
+  background-color: #cbd5e1;
+  color: #cbd5e1;
+}
+
+@keyframes holiday-twinkle {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0.35;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .holiday-flake {
+    top: var(--y);
+    animation: none;
+  }
+
+  .holiday-flake > span,
+  .holiday-light {
+    animation: none;
+  }
+}

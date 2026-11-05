@@ -57,6 +57,19 @@ html.egg-open {
   overflow: hidden;
 }
 
+/* Seasonal theme: `data-season` / `data-season-off` are set by the head script before paint. */
+.season-hint {
+  display: none;
+}
+
+html[data-season]:not([data-season-off], .season-hint-dismissed) .season-hint {
+  display: block;
+}
+
+html[data-season='halloween']:not([data-season-off]) [data-season-photo] img {
+  --tw-ring-color: rgb(245 158 11 / 0.6);
+}
+
 /* Shared scroll/load reveal. The hidden state is armed by the `reveal-enabled`
    class (added inline before paint) so content stays visible with JS off or
    reduced motion. Elements inside `[data-reveal-stagger]` are delayed by index. */

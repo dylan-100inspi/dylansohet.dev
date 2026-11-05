@@ -43,9 +43,7 @@ const testimonials = [
 
 <section id="recommendations" class="bg-slate-100/60 py-16 sm:py-20 lg:py-24 dark:bg-slate-800/30">
   <div class="mx-auto max-w-5xl px-4 sm:px-6" data-reveal-stagger>
-    <h2
-      class="reveal text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl dark:text-slate-50"
-    >
+    <h2 class="reveal text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl dark:text-slate-50">
       {t('recommendations.heading')}
     </h2>
     <p class="reveal mt-3 text-slate-500 dark:text-slate-400">{t('recommendations.lead')}</p>
@@ -55,36 +53,34 @@ const testimonials = [
     </p>
 
     <div class="mt-8 grid gap-6 md:grid-cols-2">
-      {
-        testimonials.map((item) => (
-          <figure class="reveal flex flex-col rounded-xl border border-slate-200 bg-white/60 p-6 dark:border-slate-800 dark:bg-slate-800/30">
-            <Quote class="h-7 w-7 text-teal-500/40" />
-            <blockquote
-              lang={item.quoteLang}
-              class="mt-3 flex-1 leading-relaxed text-slate-700 dark:text-slate-300"
-            >
-              {item.quote}
-            </blockquote>
-            <figcaption class="mt-5 flex items-center gap-4 border-t border-slate-200 pt-5 dark:border-slate-800">
-              <Picture
-                src={item.photo}
-                formats={['avif', 'webp']}
-                alt={item.name}
-                width={48}
-                height={48}
-                class="h-12 w-12 shrink-0 rounded-full object-cover"
-              />
-              <div class="min-w-0 flex-1">
-                <p class="font-semibold text-slate-900 dark:text-slate-100">{item.name}</p>
-                <p class="truncate text-sm text-slate-500 dark:text-slate-400">{item.role}</p>
-                <p class="text-xs text-slate-400 dark:text-slate-500">
-                  {item.relationship} &middot; {item.date}
-                </p>
-              </div>
-            </figcaption>
-          </figure>
-        ))
-      }
+      {testimonials.map((item) => (
+        <figure class="reveal flex flex-col rounded-xl border border-slate-200 bg-white/60 p-6 dark:border-slate-800 dark:bg-slate-800/30">
+          <Quote class="h-7 w-7 text-teal-500/40" />
+          <blockquote
+            lang={item.quoteLang}
+            class="mt-3 flex-1 leading-relaxed text-slate-700 dark:text-slate-300"
+          >
+            {item.quote}
+          </blockquote>
+          <figcaption class="mt-5 flex items-center gap-4 border-t border-slate-200 pt-5 dark:border-slate-800">
+            <Picture
+              src={item.photo}
+              formats={['avif', 'webp']}
+              alt={item.name}
+              width={48}
+              height={48}
+              class="h-12 w-12 shrink-0 rounded-full object-cover"
+            />
+            <div class="min-w-0 flex-1">
+              <p class="font-semibold text-slate-900 dark:text-slate-100">{item.name}</p>
+              <p class="truncate text-sm text-slate-500 dark:text-slate-400">{item.role}</p>
+              <p class="text-xs text-slate-400 dark:text-slate-500">
+                {item.relationship} &middot; {item.date}
+              </p>
+            </div>
+          </figcaption>
+        </figure>
+      ))}
     </div>
   </div>
 </section>

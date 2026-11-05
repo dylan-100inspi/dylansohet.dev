@@ -9,6 +9,7 @@ import NavProgress from '../components/NavProgress.astro';
 import CommandPalette from '../components/command-palette/CommandPalette.astro';
 import EasterEgg from '../components/EasterEgg.astro';
 import profileImage from '../assets/images/profile.jpeg';
+import detectSeasonScript from '../scripts/seasonal/detect-season.js?raw';
 import { author, site } from '../config/site';
 
 interface Props {
@@ -64,7 +65,7 @@ const ogImageUrl = new URL(ogImage ?? `/og-${locale}.png`, Astro.site);
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={pageDescription} />
     <meta property="og:url" content={canonicalUrl.href} />
-    <meta property="og:locale" content={locale === 'fr' ? 'fr_CA' : 'en_CA'} />
+    <meta property="og:locale" content={locale === 'fr' ? 'fr_FR' : 'en_GB'} />
     <meta property="og:image" content={ogImageUrl.href} />
     <meta property="og:image:type" content="image/png" />
     <meta property="og:image:width" content="1200" />
@@ -87,25 +88,22 @@ const ogImageUrl = new URL(ogImage ?? `/og-${locale}.png`, Astro.site);
         image: new URL(profileImage.src, Astro.site).href,
         address: {
           '@type': 'PostalAddress',
-          addressLocality: 'Saguenay',
-          addressRegion: 'QC',
-          addressCountry: 'CA',
+          addressCountry: 'LU',
         },
         knowsLanguage: ['French', 'English'],
         knowsAbout: ['Angular', 'TypeScript', 'C#', '.NET', 'Web development'],
         alumniOf: { '@type': 'CollegeOrUniversity', name: 'Henallux' },
-        worksFor: { '@type': 'Organization', name: 'Beneva' },
         sameAs: [author.github, author.linkedin],
       })}
     />
-
     <!-- Umami analytics -->
     <script
       is:inline
       defer
       src="https://cloud.umami.is/script.js"
       data-website-id="7c779546-356a-425b-bc8e-87f638674dbb"
-      data-domains="dylansohet.dev"></script>
+      data-domains="dylansohet.dev"
+    ></script>
 
     <script is:inline>
       (function () {
@@ -116,6 +114,7 @@ const ogImageUrl = new URL(ogImage ?? `/og-${locale}.png`, Astro.site);
       })();
     </script>
 
+    <script is:inline set:html={detectSeasonScript} />
     <script is:inline>
       (function () {
         if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
@@ -124,9 +123,7 @@ const ogImageUrl = new URL(ogImage ?? `/og-${locale}.png`, Astro.site);
       })();
     </script>
   </head>
-  <body
-    class="flex min-h-screen flex-col bg-slate-50 text-slate-700 dark:bg-slate-900 dark:text-slate-300"
-  >
+  <body class="flex min-h-screen flex-col bg-slate-50 text-slate-700 dark:bg-slate-900 dark:text-slate-300">
     <a
       href="#main-content"
       class="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-4 focus:z-[60] focus:rounded-lg focus:bg-teal-500 focus:px-4 focus:py-2 focus:text-sm focus:font-medium focus:text-slate-900"
@@ -150,6 +147,10 @@ const ogImageUrl = new URL(ogImage ?? `/og-${locale}.png`, Astro.site);
       import '../scripts/command-palette';
       import '../scripts/konami';
       import '../scripts/analytics';
+
+      if (document.documentElement.dataset.season) {
+        void import('../scripts/seasonal/toggle');
+      }
     </script>
   </body>
 </html>
