@@ -4,7 +4,11 @@
       "startServerCommand": "pnpm preview",
       "startServerReadyPattern": "localhost",
       "startServerReadyTimeout": 20000,
-      "url": ["http://localhost:4321/en/", "http://localhost:4321/fr/"],
+      "url": [
+        "http://localhost:4321/en/",
+        "http://localhost:4321/fr/",
+        "http://localhost:4321/en/?season=starwars"
+      ],
       "numberOfRuns": 3
     },
     "assert": {

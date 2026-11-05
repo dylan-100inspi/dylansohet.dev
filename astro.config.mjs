@@ -132,10 +132,12 @@ export default defineConfig({
         // without enabling general eval().
         resources: ["'self'", 'https://cloud.umami.is', "'wasm-unsafe-eval'"],
         // Hand-written is:inline scripts Astro does not process: root-locale
-        // redirect (index.astro), no-FOUC theme + reveal-motion (BaseLayout).
+        // redirect (index.astro), no-FOUC theme, season detection (detect-season.js),
+        // reveal-motion (BaseLayout).
         hashes: [
           'sha256-VuXFE0ohOPI6dGIChn1AKT6R/NpHAaNQuDnuJm3KtNY=',
           'sha256-SjdYx78752ievk2BYq/lFta32vpVf6gmzU/+C1VQGvQ=',
+          'sha256-7Wgpt056vKq5e+EC6aUwzP/rRmI/Uudtpo7n/SmWK0w=',
           'sha256-3Ozvi5u5h5KMcX/2rz6VATYOk96IS1yU7S0wlSFpcuo=',
         ],
       },
