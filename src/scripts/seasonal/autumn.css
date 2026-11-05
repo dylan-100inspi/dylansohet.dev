@@ -1,0 +1,49 @@
+.autumn-leaf {
+  position: absolute;
+  top: -10%;
+  left: var(--left);
+  width: var(--size);
+  height: var(--size);
+  opacity: 0.6;
+  animation: autumn-fall var(--duration) linear var(--delay) infinite;
+}
+
+.autumn-leaf__sway {
+  display: block;
+  width: 100%;
+  height: 100%;
+  animation: autumn-sway calc(var(--duration) / 4) ease-in-out var(--delay) infinite alternate;
+}
+
+.autumn-leaf svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+@keyframes autumn-fall {
+  to {
+    transform: translate3d(0, 125cqh, 0);
+  }
+}
+
+@keyframes autumn-sway {
+  from {
+    transform: translateX(-2.5rem) rotate(-35deg);
+  }
+  to {
+    transform: translateX(2.5rem) rotate(40deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .autumn-leaf {
+    top: var(--rest-top);
+    animation: none;
+  }
+
+  .autumn-leaf__sway {
+    animation: none;
+    transform: rotate(20deg);
+  }
+}

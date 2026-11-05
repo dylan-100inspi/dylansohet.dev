@@ -28,8 +28,7 @@ const inputId = 'cmdk-input';
       data-cmdk-live
       data-results-one={t('commandPalette.resultsOne')}
       data-results-many={t('commandPalette.resultsMany')}
-    >
-    </p>
+    ></p>
 
     <div class="cmdk-search">
       <Search class="cmdk-search-icon" aria-hidden="true" />
@@ -49,54 +48,58 @@ const inputId = 'cmdk-input';
     </div>
 
     <ul id={listId} class="cmdk-list" role="listbox" aria-label={t('commandPalette.open')}>
-      {
-        groups.map((group) => (
-          <Fragment>
-            <li class="cmdk-group" role="presentation" data-cmdk-group>
-              {group.label}
-            </li>
-            {group.items.map((item) => (
-              <li
-                id={`cmdk-${item.id}`}
-                class="cmdk-item"
-                role="option"
-                aria-selected="false"
-                data-cmdk-item
-                data-keywords={item.keywords}
-                data-action={item.action}
-                data-href={item.href}
-                data-target-locale={item.targetLocale}
-                data-copy={item.copy}
+      {groups.map((group) => (
+        <Fragment>
+          <li class="cmdk-group" role="presentation" data-cmdk-group>
+            {group.label}
+          </li>
+          {group.items.map((item) => (
+            <li
+              id={`cmdk-${item.id}`}
+              class="cmdk-item"
+              role="option"
+              aria-selected="false"
+              data-cmdk-item
+              data-keywords={item.keywords}
+              data-action={item.action}
+              data-href={item.href}
+              data-target-locale={item.targetLocale}
+              data-copy={item.copy}
+            >
+              <CommandItemIcon item={item as CommandItem} />
+              <span
+                class="cmdk-item-label"
+                data-copied-label={
+                  item.id === 'copy-email' ? t('commandPalette.copied') : undefined
+                }
               >
-                <CommandItemIcon item={item as CommandItem} />
-                <span
-                  class="cmdk-item-label"
-                  data-copied-label={
-                    item.id === 'copy-email' ? t('commandPalette.copied') : undefined
-                  }
-                >
-                  {item.label}
-                </span>
-                <kbd class="cmdk-item-hint" aria-hidden="true">
-                  ↵
-                </kbd>
-              </li>
-            ))}
-          </Fragment>
-        ))
-      }
-      <li class="cmdk-empty hidden" role="presentation">{t('commandPalette.empty')}</li>
+                {item.label}
+              </span>
+              <kbd class="cmdk-item-hint" aria-hidden="true">
+                ↵
+              </kbd>
+            </li>
+          ))}
+        </Fragment>
+      ))}
+      <li class="cmdk-empty hidden" role="presentation">
+        {t('commandPalette.empty')}
+      </li>
     </ul>
 
     <div class="cmdk-footer">
       <span class="flex items-center gap-1.5">
-        <kbd>↑</kbd><kbd>↓</kbd>{t('commandPalette.hintNavigate')}
+        <kbd>↑</kbd>
+        <kbd>↓</kbd>
+        {t('commandPalette.hintNavigate')}
       </span>
       <span class="flex items-center gap-1.5">
-        <kbd>↵</kbd>{t('commandPalette.hintSelect')}
+        <kbd>↵</kbd>
+        {t('commandPalette.hintSelect')}
       </span>
       <span class="flex items-center gap-1.5">
-        <kbd>esc</kbd>{t('commandPalette.hintClose')}
+        <kbd>esc</kbd>
+        {t('commandPalette.hintClose')}
       </span>
     </div>
   </div>

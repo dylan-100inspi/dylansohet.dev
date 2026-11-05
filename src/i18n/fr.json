@@ -1,7 +1,7 @@
 {
   "site": {
     "title": "Dylan Sohet — Développeur Full Stack",
-    "description": "Portfolio de Dylan Sohet, Développeur Full Stack basé à Saguenay, QC."
+    "description": "Portfolio de Dylan Sohet, Développeur Full Stack à la recherche d'opportunités au Luxembourg."
   },
   "a11y": {
     "skipToContent": "Aller au contenu",
@@ -22,7 +22,17 @@
     "openMenu": "Ouvrir le menu",
     "closeMenu": "Fermer le menu",
     "mainNavigation": "Navigation principale",
-    "mobileNavigation": "Navigation mobile"
+    "mobileNavigation": "Navigation mobile",
+    "seasonal": {
+      "generic": "Décorations saisonnières",
+      "autumn": "Décorations d'automne",
+      "halloween": "Décorations d'Halloween",
+      "holidays": "Décorations des fêtes",
+      "starwars": "Décorations du 4 mai",
+      "on": "activées",
+      "off": "désactivées",
+      "status": "{name} : {state}"
+    }
   },
   "commandPalette": {
     "placeholder": "Tapez une commande ou recherchez…",
@@ -32,7 +42,7 @@
     "groupLinks": "Liens",
     "toggleTheme": "Basculer le thème",
     "switchLang": "Passer en anglais",
-    "copyEmail": "Copier l'adresse courriel",
+    "copyEmail": "Copier l'adresse e-mail",
     "copied": "Copié !",
     "viewSource": "Voir le code source",
     "githubProfile": "Profil GitHub",
@@ -55,12 +65,12 @@
     "heading": "À propos",
     "p1": "Développeur Full Stack motivé et curieux, toujours en quête de nouveaux apprentissages technologiques et de défis à relever. Je suis spécialisé en TypeScript, Angular et C# .NET.",
     "p2": "J'ai passé trois ans chez DigiWall, une jeune PME en Belgique, où j'ai contribué à la réalisation de six applications, toutes en production — chacune pour une entreprise différente. J'ai développé l'une d'entre elles entièrement seul, de l'analyse à la conception jusqu'au développement et à la livraison en production ; elle est aujourd'hui encore utilisée chaque jour dans l'entreprise. J'ai également été l'un des développeurs principaux, pour une société américaine établie en Flandre — une année complète passée exclusivement en anglais.",
-    "p3": "J'ai ensuite voulu me confronter à un nouvel environnement, géographique et professionnel : je suis parti pour le Québec. Malgré un contexte d'embauche difficile, j'ai su me faire repérer par un gestionnaire bienveillant qui m'a offert ma chance. Je fais aujourd'hui partie de la grande équipe TI de Beneva, où je développe en Angular et TypeScript et livre très régulièrement en production. Bien qu'arrivé depuis peu, j'ai reçu à plusieurs reprises des retours très positifs sur mon travail et ma progression."
+    "p3": "J'ai ensuite voulu me confronter à un nouvel environnement, géographique et professionnel : je suis parti pour le Québec. Malgré un contexte d'embauche difficile, j'ai su me faire repérer par un responsable bienveillant qui m'a offert ma chance. J'ai rejoint la grande équipe IT de Beneva, où j'ai développé en Angular et TypeScript, livré très régulièrement en production et reçu à plusieurs reprises des retours très positifs sur mon travail et ma progression. De retour en Europe, je recherche aujourd'hui mon prochain poste au Luxembourg."
   },
   "now": {
     "heading": "En ce moment",
     "lead": "Ce sur quoi je travaille ces temps-ci.",
-    "work": "Je développe des fonctionnalités d'assurance chez Beneva, utilisées directement par les clients via leur portail, avec une nouvelle livraison toutes les trois semaines.",
+    "work": "Je recherche mon prochain poste d'analyste-développeur full stack au Luxembourg, au sein d'une équipe francophone ou anglophone.",
     "building": "Je conçois et peaufine ce portfolio, en soignant l'accessibilité, la performance et les détails.",
     "learning": "J'affine mes pratiques d'utilisation de l'IA dans mon travail au quotidien et vise une certification sur le sujet.",
     "personal": "En dehors du code, j'apprends les bases du japonais et je prépare un voyage au Japon."
@@ -107,8 +117,8 @@
   },
   "contact": {
     "heading": "Contact",
-    "lead": "Que ce soit pour un projet, un poste ou simplement pour échanger, vous pouvez me joindre facilement par courriel ou sur LinkedIn.",
-    "emailLabel": "Courriel",
+    "lead": "Que ce soit pour un projet, un poste ou simplement pour échanger, vous pouvez me joindre facilement par e-mail ou sur LinkedIn.",
+    "emailLabel": "E-mail",
     "linkedinLabel": "LinkedIn",
     "githubLabel": "GitHub",
     "downloadCv": "Télécharger le CV"

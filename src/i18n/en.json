@@ -1,7 +1,7 @@
 {
   "site": {
     "title": "Dylan Sohet — Full Stack Developer",
-    "description": "Portfolio of Dylan Sohet, Full Stack Developer based in Saguenay, QC."
+    "description": "Portfolio of Dylan Sohet, Full Stack Developer open to opportunities in Luxembourg."
   },
   "a11y": {
     "skipToContent": "Skip to content",
@@ -22,7 +22,17 @@
     "openMenu": "Open menu",
     "closeMenu": "Close menu",
     "mainNavigation": "Main navigation",
-    "mobileNavigation": "Mobile navigation"
+    "mobileNavigation": "Mobile navigation",
+    "seasonal": {
+      "generic": "Seasonal decorations",
+      "autumn": "Autumn decorations",
+      "halloween": "Halloween decorations",
+      "holidays": "Holiday decorations",
+      "starwars": "May the 4th decorations",
+      "on": "on",
+      "off": "off",
+      "status": "{name}: {state}"
+    }
   },
   "commandPalette": {
     "placeholder": "Type a command or search…",
@@ -55,12 +65,12 @@
     "heading": "About",
     "p1": "A motivated and curious Full Stack developer, always looking for new technologies to learn and challenges to take on. I specialize in TypeScript, Angular and C# .NET.",
     "p2": "I spent three years at DigiWall, a young SME in Belgium, where I contributed to six applications shipped to production — each for a different company. I built one of them entirely on my own, from analysis and design through development and release to production; it's still used every day across the company. I was also one of the lead developers for a US company based in Flanders — a full year working exclusively in English.",
-    "p3": "I then wanted to take on a new environment, both geographical and professional: I moved to Québec. Despite a tough hiring climate, I managed to catch the eye of a supportive manager who gave me my chance. I'm now part of the large IT team at Beneva, where I build in Angular and TypeScript and ship to production on a regular basis. Although I joined recently, I've received positive feedback several times on my work and my progress."
+    "p3": "I then wanted to take on a new environment, both geographical and professional: I moved to Québec. Despite a tough hiring climate, I managed to catch the eye of a supportive manager who gave me my chance. I joined the large IT team at Beneva, where I built in Angular and TypeScript, shipped to production on a regular basis, and received positive feedback several times on my work and my progress. I'm now back in Europe, looking for my next role in Luxembourg."
   },
   "now": {
     "heading": "Now",
     "lead": "What I'm working on these days.",
-    "work": "At Beneva, I build insurance features used directly by clients through their portal, with a new release shipped every three weeks.",
+    "work": "I'm looking for my next Full Stack role in Luxembourg, in a French- or English-speaking team.",
     "building": "I design and polish this portfolio, sweating the details on accessibility, performance and craft.",
     "learning": "I'm refining how I use AI in my day-to-day work, and aiming for a certification on the subject.",
     "personal": "Away from code, I'm learning the basics of Japanese and planning a trip to Japan."

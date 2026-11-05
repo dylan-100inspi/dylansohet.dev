@@ -3,6 +3,7 @@ import { useTranslations } from '../i18n/translations';
 import type { Locale } from '../i18n/translations';
 import { sections } from '../config/sections';
 import AnimatedWordmark from './AnimatedWordmark.astro';
+import SeasonToggle from './SeasonToggle.astro';
 import { Sun, Moon, Search, Command } from '@lucide/astro';
 
 interface Props {
@@ -45,16 +46,14 @@ const navLinks = sections.flatMap((section) =>
 
     <!-- Desktop nav -->
     <nav class="hidden items-center gap-6 md:flex" aria-label={t('header.mainNavigation')}>
-      {
-        navLinks.map((link) => (
-          <a
-            href={link.href}
-            class={`hidden rounded-sm text-sm font-medium text-slate-300 transition-colors hover:text-teal-400 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-teal-400 ${link.showClass}`}
-          >
-            {link.label}
-          </a>
-        ))
-      }
+      {navLinks.map((link) => (
+        <a
+          href={link.href}
+          class={`hidden rounded-sm text-sm font-medium text-slate-300 transition-colors hover:text-teal-400 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-teal-400 ${link.showClass}`}
+        >
+          {link.label}
+        </a>
+      ))}
     </nav>
 
     <!-- Desktop controls -->
@@ -73,6 +72,8 @@ const navLinks = sections.flatMap((section) =>
           <Command class="h-3 w-3" aria-hidden="true" />K
         </kbd>
       </button>
+
+      <SeasonToggle locale={locale} variant="desktop" />
 
       <button
         id="theme-toggle"
@@ -115,6 +116,10 @@ const navLinks = sections.flatMap((section) =>
         data-close-label={t('header.closeMenu')}
       >
         <span class="burger-icon" aria-hidden="true"></span>
+        <span
+          class="season-hint absolute top-1 right-1 size-2 rounded-full bg-amber-500 ring-2 ring-slate-900"
+          aria-hidden="true"
+        ></span>
       </button>
     </div>
   </div>
@@ -127,19 +132,19 @@ const navLinks = sections.flatMap((section) =>
     inert
   >
     <nav class="flex flex-col gap-1 px-4 py-3" aria-label={t('header.mobileNavigation')}>
-      {
-        navLinks.map((link) => (
-          <a
-            href={link.href}
-            class="mobile-nav-link rounded-lg px-3 py-2 text-sm font-medium text-slate-300 transition-colors hover:bg-slate-800 hover:text-teal-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-500"
-          >
-            {link.label}
-          </a>
-        ))
-      }
+      {navLinks.map((link) => (
+        <a
+          href={link.href}
+          class="mobile-nav-link rounded-lg px-3 py-2 text-sm font-medium text-slate-300 transition-colors hover:bg-slate-800 hover:text-teal-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-500"
+        >
+          {link.label}
+        </a>
+      ))}
     </nav>
 
     <div class="flex items-center gap-2 border-t border-slate-800 px-4 py-3">
+      <SeasonToggle locale={locale} variant="mobile" />
+
       <button
         id="theme-toggle-mobile"
         type="button"

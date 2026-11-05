@@ -28,15 +28,15 @@ const projects: Project[] = [
 
 <section id="projects" class="bg-slate-100/60 py-16 sm:py-20 lg:py-24 dark:bg-slate-800/30">
   <div class="mx-auto max-w-5xl px-4 sm:px-6" data-reveal-stagger>
-    <h2
-      class="reveal text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl dark:text-slate-50"
-    >
+    <h2 class="reveal text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl dark:text-slate-50">
       {t('projects.heading')}
     </h2>
     <p class="reveal mt-3 text-slate-500 dark:text-slate-400">{t('projects.lead')}</p>
 
     <div class="mt-8 flex flex-col gap-6">
-      {projects.map((project) => <ProjectCard project={project} locale={locale} />)}
+      {projects.map((project) => (
+        <ProjectCard project={project} locale={locale} />
+      ))}
     </div>
   </div>
 </section>

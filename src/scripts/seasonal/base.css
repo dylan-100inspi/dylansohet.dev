@@ -1,0 +1,17 @@
+.season-layer {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+  container-type: size;
+}
+
+[data-season-deco] {
+  pointer-events: none;
+}
+
+[data-season-paused] [data-season-deco],
+[data-season-paused] [data-season-deco] * {
+  animation-play-state: paused !important;
+}

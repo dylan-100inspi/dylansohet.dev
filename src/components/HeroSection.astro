@@ -35,7 +35,7 @@ const techTags = ['TypeScript', 'Angular', 'C# .NET', 'Git', 'CI/CD'];
     >
       <!-- Photo (top on mobile, right on desktop) -->
       <div class="reveal order-first flex shrink-0 justify-center lg:order-last">
-        <div class="relative">
+        <div class="relative" data-season-photo>
           <Picture
             src={profileImage}
             formats={['avif', 'webp']}
@@ -47,18 +47,13 @@ const techTags = ['TypeScript', 'Angular', 'C# .NET', 'Git', 'CI/CD'];
             fetchpriority="high"
             data-easter-egg-trigger
           />
-          <div
-            class="absolute -inset-1 -z-10 rounded-full bg-gradient-to-br from-teal-500/20 to-transparent blur-2xl"
-          >
-          </div>
+          <div class="absolute -inset-1 -z-10 rounded-full bg-gradient-to-br from-teal-500/20 to-transparent blur-2xl"></div>
         </div>
       </div>
 
       <!-- Text content -->
       <div class="flex-1 text-center lg:text-left">
-        <h1
-          class="reveal text-4xl font-bold tracking-tight text-slate-900 sm:text-5xl lg:text-6xl dark:text-slate-50"
-        >
+        <h1 class="reveal text-4xl font-bold tracking-tight text-slate-900 sm:text-5xl lg:text-6xl dark:text-slate-50">
           {author.fullName}
         </h1>
 
@@ -72,13 +67,11 @@ const techTags = ['TypeScript', 'Angular', 'C# .NET', 'Git', 'CI/CD'];
 
         <!-- Tech tags -->
         <div class="reveal mt-6 flex flex-wrap justify-center gap-2 lg:justify-start">
-          {
-            techTags.map((tag) => (
-              <span class="rounded-full border border-slate-300/80 bg-slate-200/70 px-3 py-1 text-sm font-semibold text-slate-800 dark:border-slate-700 dark:bg-slate-800 dark:font-medium dark:text-teal-400">
-                {tag}
-              </span>
-            ))
-          }
+          {techTags.map((tag) => (
+            <span class="rounded-full border border-slate-300/80 bg-slate-200/70 px-3 py-1 text-sm font-semibold text-slate-800 dark:border-slate-700 dark:bg-slate-800 dark:font-medium dark:text-teal-400">
+              {tag}
+            </span>
+          ))}
         </div>
 
         <!-- Action links -->

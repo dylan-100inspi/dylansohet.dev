@@ -1,0 +1,143 @@
+---
+import { Ghost, Leaf, Snowflake } from '@lucide/astro';
+import { useTranslations } from '../i18n/translations';
+import type { Locale } from '../i18n/translations';
+import MedalIcon from '../assets/icons/medal.svg';
+
+interface Props {
+  locale: Locale;
+  variant: 'desktop' | 'mobile';
+}
+
+const { locale, variant } = Astro.props;
+const t = useTranslations(locale);
+
+const labels = {
+  autumn: t('header.seasonal.autumn'),
+  halloween: t('header.seasonal.halloween'),
+  holidays: t('header.seasonal.holidays'),
+  starwars: t('header.seasonal.starwars'),
+  on: t('header.seasonal.on'),
+  off: t('header.seasonal.off'),
+  status: t('header.seasonal.status'),
+};
+
+const iconClass = 'h-5 w-5';
+const isDesktop = variant === 'desktop';
+---
+
+<div class="season-toggle group relative">
+  <button
+    type="button"
+    data-season-button={variant}
+    data-labels={JSON.stringify(labels)}
+    aria-pressed="true"
+    aria-label={isDesktop ? t('header.seasonal.generic') : undefined}
+    class:list={[
+      'relative flex items-center rounded-lg p-2 text-slate-300 transition-colors hover:bg-slate-800 hover:text-teal-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-500',
+      !isDesktop && 'gap-2 pr-3',
+    ]}
+  >
+    <span class="season-icons relative block h-5 w-5" aria-hidden="true">
+      <span data-season-icon="autumn">
+        <Leaf class={iconClass} />
+      </span>
+      <span data-season-icon="halloween">
+        <Ghost class={iconClass} />
+      </span>
+      <span data-season-icon="holidays">
+        <Snowflake class={iconClass} />
+      </span>
+      <span data-season-icon="starwars">
+        <MedalIcon class={iconClass} />
+      </span>
+    </span>
+    {!isDesktop && (
+      <>
+        <span class="text-sm font-medium" data-season-name>
+          {t('header.seasonal.generic')}
+        </span>
+        <span class="text-xs text-slate-400" data-season-state aria-hidden="true" />
+      </>
+    )}
+    {isDesktop && (
+      <span
+        class="season-hint absolute top-1 right-1 size-2 rounded-full bg-amber-500 ring-2 ring-slate-900"
+        aria-hidden="true"
+      />
+    )}
+  </button>
+
+  {isDesktop && (
+    <span
+      class="season-tooltip invisible absolute top-full right-0 z-10 pt-2 opacity-0 group-hover:visible group-hover:opacity-100 group-has-[:focus-visible]:visible group-has-[:focus-visible]:opacity-100 motion-safe:transition-opacity"
+      aria-hidden="true"
+    >
+      <span
+        class="block rounded-md border border-slate-700 bg-slate-800 px-2.5 py-1 text-xs font-medium whitespace-nowrap text-slate-100 shadow-lg"
+        data-season-tooltip
+      >
+        {t('header.seasonal.generic')}
+      </span>
+    </span>
+  )}
+</div>
+
+<style>
+  /* Visibility is driven by attributes the head script sets before first paint. */
+  .season-toggle,
+  [data-season-icon] {
+    display: none;
+  }
+
+  :global(html[data-season]) .season-toggle {
+    display: block;
+  }
+
+  :global(html[data-season='autumn']) [data-season-icon='autumn'],
+  :global(html[data-season='halloween']) [data-season-icon='halloween'],
+  :global(html[data-season='holidays']) [data-season-icon='holidays'],
+  :global(html[data-season='starwars']) [data-season-icon='starwars'] {
+    display: block;
+  }
+
+  /* Off state: dim the icon and strike it through top-left to bottom-right, like EyeOff.
+     The mask cuts a gap around the slash so it reads on dense or diagonal icons (leaf, snowflake). */
+  [aria-pressed='false'] .season-icons {
+    opacity: 0.6;
+  }
+
+  [aria-pressed='false'] [data-season-icon] {
+    -webkit-mask-image: linear-gradient(
+      45deg,
+      #000 calc(50% - 2.5px),
+      transparent calc(50% - 2.5px),
+      transparent calc(50% + 2.5px),
+      #000 calc(50% + 2.5px)
+    );
+    mask-image: linear-gradient(
+      45deg,
+      #000 calc(50% - 2.5px),
+      transparent calc(50% - 2.5px),
+      transparent calc(50% + 2.5px),
+      #000 calc(50% + 2.5px)
+    );
+  }
+
+  [aria-pressed='false'] .season-icons::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 130%;
+    height: 2px;
+    border-radius: 1px;
+    background-color: currentColor;
+    transform: translate(-50%, -50%) rotate(45deg);
+  }
+
+  .season-toggle[data-tooltip-dismissed] .season-tooltip {
+    visibility: hidden;
+    opacity: 0;
+  }
+</style>

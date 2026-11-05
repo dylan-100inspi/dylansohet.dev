@@ -88,27 +88,59 @@ function initCommandPalette(dialog: HTMLDialogElement) {
     input?.focus();
   }
 
-  function closePalette() {
+  function closePalette(onClosed?: () => void) {
     if (reduceMotion.matches) {
       dialog.close();
+      onClosed?.();
       return;
     }
     dialog.classList.add('is-closing');
     const panel = dialog.querySelector<HTMLElement>('.cmdk-panel');
+    let finished = false;
     const finish = () => {
+      if (finished) return;
+      finished = true;
       dialog.close();
       dialog.classList.remove('is-closing');
+      onClosed?.();
     };
     panel?.addEventListener('transitionend', finish, { once: true });
     window.setTimeout(finish, 220);
+  }
+
+  // On touch devices the on-screen keyboard shrinks the visual viewport; wait for it to
+  // finish closing so a scroll started now isn't interrupted by the viewport resize.
+  function whenViewportSettled(callback: () => void) {
+    const viewport = window.visualViewport;
+    const keyboardOpen = viewport !== null && window.innerHeight - viewport.height > 100;
+    if (!viewport || !keyboardOpen) {
+      callback();
+      return;
+    }
+    let done = false;
+    const run = () => {
+      if (done) return;
+      done = true;
+      viewport.removeEventListener('resize', run);
+      requestAnimationFrame(callback);
+    };
+    viewport.addEventListener('resize', run);
+    window.setTimeout(run, 400);
+  }
+
+  function scrollToSection(id: string) {
+    // Assigning an unchanged hash is a no-op per spec, so scroll explicitly in that case.
+    if (window.location.hash === `#${id}`) document.getElementById(id)?.scrollIntoView();
+    else window.location.hash = id;
   }
 
   function runAction(item: HTMLElement) {
     switch (item.dataset.action) {
       case 'navigate': {
         const id = item.id.replace('cmdk-', '');
-        closePalette();
-        window.location.hash = id;
+        // Dismiss the mobile keyboard up front and scroll only once the dialog is gone.
+        input?.blur();
+        closePalette(() => whenViewportSettled(() => scrollToSection(id)));
         break;
       }
       case 'download': {

@@ -34,12 +34,21 @@ Source code for my personal portfolio — a fast, bilingual (FR/EN), static site
 
 Interactive widgets (command palette, menus) are vanilla TypeScript on native elements — no client-side framework runtime.
 
+## Why Astro?
+
+I work with Angular day to day, but this site is mostly static content, not a huge application. So I picked the tool that fits the project instead of the one I know best.
+
+- **No framework runtime shipped.** Pages are pre-rendered HTML/CSS; vanilla TypeScript runs only where interaction is needed, and heavier parts (the 3D easter egg) load on demand. Lighthouse CI targets ≥ 95 in every category.
+- **Locale routing built in** (`/en/`, `/fr/`), so no extra i18n library.
+
+If the site grew into a real application (auth, complex state), I'd reassess the choice.
+
 ## Development
 
 **Prerequisites**
 
 - Node.js — version pinned in [`.nvmrc`](./.nvmrc) (current LTS line)
-- pnpm via [Corepack](https://nodejs.org/api/corepack.html) — `corepack enable pnpm`
+- pnpm via [Corepack](https://github.com/nodejs/corepack) — `npm i -g corepack && corepack enable pnpm`
 
 **Commands**
 

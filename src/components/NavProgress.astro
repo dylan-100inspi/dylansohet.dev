@@ -16,18 +16,16 @@ const t = useTranslations(locale);
   class="fixed top-1/2 right-5 z-40 hidden -translate-y-1/2 flex-col gap-3 lg:flex"
   aria-label={t('a11y.sectionProgress')}
 >
-  {
-    sections.map((section) => (
-      <a
-        href={`/${locale}/#${section.id}`}
-        data-dot={section.id}
-        aria-label={t(section.labelKey)}
-        class="nav-dot flex items-center justify-end py-1"
-      >
-        <span class="nav-dot__mark size-2.5 rounded-full bg-slate-400/50" />
-      </a>
-    ))
-  }
+  {sections.map((section) => (
+    <a
+      href={`/${locale}/#${section.id}`}
+      data-dot={section.id}
+      aria-label={t(section.labelKey)}
+      class="nav-dot flex items-center justify-end py-1"
+    >
+      <span class="nav-dot__mark size-2.5 rounded-full bg-slate-400/50" />
+    </a>
+  ))}
 </nav>
 
 <script>
