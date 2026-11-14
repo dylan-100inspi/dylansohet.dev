@@ -20,11 +20,11 @@
   "dependencies": {
     "@astrojs/sitemap": "^3.7.4",
     "@google/model-viewer": "^4.4.0",
-    "@lucide/astro": "^1.68.0",
-    "@tailwindcss/vite": "^4.3.4",
-    "astro": "^7.4.5",
+    "@lucide/astro": "^1.72.0",
+    "@tailwindcss/vite": "^4.3.5",
+    "astro": "^7.4.10",
     "sharp": "^0.35.5",
-    "tailwindcss": "^4.3.4"
+    "tailwindcss": "^4.3.5"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.12",
@@ -37,6 +37,6 @@
     "prettier": "^3.9.10",
     "prettier-plugin-astro": "^1.1.2",
     "typescript": "^6.0.3",
-    "typescript-eslint": "^8.72.1"
+    "typescript-eslint": "^8.72.2"
   }
 }
