@@ -36,6 +36,7 @@
   },
   "commandPalette": {
     "placeholder": "Tapez une commande ou recherchez…",
+    "title": "Palette de commandes",
     "open": "Ouvrir la palette de commandes",
     "groupNavigation": "Navigation",
     "groupActions": "Actions",
@@ -64,7 +65,7 @@
   "about": {
     "heading": "À propos",
     "p1": "Développeur Full Stack motivé et curieux, toujours en quête de nouveaux apprentissages technologiques et de défis à relever. Je suis spécialisé en TypeScript, Angular et C# .NET.",
-    "p2": "J'ai passé trois ans chez DigiWall, une jeune PME en Belgique, où j'ai contribué à la réalisation de six applications, toutes en production — chacune pour une entreprise différente. J'ai développé l'une d'entre elles entièrement seul, de l'analyse à la conception jusqu'au développement et à la livraison en production ; elle est aujourd'hui encore utilisée chaque jour dans l'entreprise. J'ai également été l'un des développeurs principaux, pour une société américaine établie en Flandre — une année complète passée exclusivement en anglais.",
+    "p2": "J'ai passé trois ans chez DigiWall, une jeune PME en Belgique, où j'ai contribué à la réalisation de six applications, toutes en production — chacune pour une entreprise différente. J'ai développé l'une d'entre elles entièrement seul, de l'analyse à la conception jusqu'au développement et à la livraison en production ; elle est aujourd'hui encore utilisée chaque jour dans l'entreprise. J'ai également été l'un des développeurs principaux pour une société américaine établie en Flandre — une année complète passée exclusivement en anglais.",
     "p3": "J'ai ensuite voulu me confronter à un nouvel environnement, géographique et professionnel : je suis parti pour le Québec. Malgré un contexte d'embauche difficile, j'ai su me faire repérer par un responsable bienveillant qui m'a offert ma chance. J'ai rejoint la grande équipe IT de Beneva, où j'ai développé en Angular et TypeScript, livré très régulièrement en production et reçu à plusieurs reprises des retours très positifs sur mon travail et ma progression. De retour en Europe, je recherche aujourd'hui mon prochain poste au Luxembourg."
   },
   "now": {
@@ -93,6 +94,7 @@
     "viewRepo": "Voir le dépôt",
     "viewLive": "Voir en ligne",
     "placeholderCaption": "Aperçu à venir",
+    "previewAlt": "Aperçu de {title}",
     "descriptions": {
       "portfolio": "Ce portfolio lui-même — un site bilingue qui me correspond et reflète la façon dont je travaille."
     }
@@ -132,7 +134,7 @@
     "message": "Cette page a été élaguée par le Tribunal des Variations Anachroniques (TVA) pour préserver l'Éternel Flux Temporel."
   },
   "easterEgg": {
-    "message": "Tu as trouvé l'Easter Egg",
+    "message": "Vous avez trouvé l'Easter Egg",
     "close": "Fermer"
   }
 }

@@ -1,7 +1,6 @@
 ---
 // Animated "DYLAN </> SOHET" wordmark: Geist Mono, two-tone (surname + code mark teal).
 // Words slide in from each side while the code mark spins into the gap on page load.
-import { author } from '../config/site';
 
 interface Props {
   /** Extra classes for the wrapper (sizing, layout) applied by the consumer. */
@@ -11,7 +10,7 @@ interface Props {
 const { class: className = '' } = Astro.props;
 ---
 
-<span class:list={['wm', className]} data-wm aria-label={author.fullName}>
+<span class:list={['wm', className]} data-wm>
   <span class="wm-word wm-left" aria-hidden="true">
     DYLAN
   </span>
@@ -82,13 +81,6 @@ const { class: className = '' } = Astro.props;
     transform: skewX(-4deg);
     /* Nudge right so the italic words leave equal optical space on both sides. */
     margin-left: 0.09em;
-  }
-
-  .wm-left,
-  .wm-right,
-  .wm-code {
-    opacity: 1;
-    transform: skewX(-4deg);
   }
 
   @media (prefers-reduced-motion: no-preference) {

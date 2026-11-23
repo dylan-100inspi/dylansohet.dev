@@ -4,7 +4,6 @@ import type { Locale } from '../../i18n/translations';
 import { Search } from '@lucide/astro';
 import CommandItemIcon from './CommandItemIcon.astro';
 import { buildCommandGroups } from './command-items';
-import type { CommandItem } from './command-items';
 
 interface Props {
   locale: Locale;
@@ -18,7 +17,7 @@ const listId = 'cmdk-list';
 const inputId = 'cmdk-input';
 ---
 
-<dialog class="cmdk-dialog" data-command-palette aria-label={t('commandPalette.open')}>
+<dialog class="cmdk-dialog" data-command-palette aria-label={t('commandPalette.title')}>
   <div class="cmdk-panel">
     <p
       class="sr-only"
@@ -47,7 +46,7 @@ const inputId = 'cmdk-input';
       />
     </div>
 
-    <ul id={listId} class="cmdk-list" role="listbox" aria-label={t('commandPalette.open')}>
+    <ul id={listId} class="cmdk-list" role="listbox" aria-label={t('commandPalette.title')}>
       {groups.map((group) => (
         <Fragment>
           <li class="cmdk-group" role="presentation" data-cmdk-group>
@@ -66,7 +65,7 @@ const inputId = 'cmdk-input';
               data-target-locale={item.targetLocale}
               data-copy={item.copy}
             >
-              <CommandItemIcon item={item as CommandItem} />
+              <CommandItemIcon item={item} />
               <span
                 class="cmdk-item-label"
                 data-copied-label={
@@ -219,7 +218,7 @@ const inputId = 'cmdk-input';
       @apply text-slate-900 placeholder:text-slate-400 dark:text-slate-100;
     }
     .cmdk-group {
-      @apply text-slate-400 dark:text-slate-500;
+      @apply text-slate-500 dark:text-slate-400;
     }
     .cmdk-item {
       @apply text-slate-600 dark:text-slate-300;
@@ -237,10 +236,10 @@ const inputId = 'cmdk-input';
       @apply text-teal-500 dark:text-teal-300;
     }
     .cmdk-empty {
-      @apply text-slate-400 dark:text-slate-500;
+      @apply text-slate-500 dark:text-slate-400;
     }
     .cmdk-footer {
-      @apply border-t border-slate-200/80 text-slate-400 dark:border-white/10 dark:text-slate-500;
+      @apply border-t border-slate-200/80 text-slate-500 dark:border-white/10 dark:text-slate-400;
     }
     .cmdk-footer kbd {
       @apply border-slate-200 text-slate-500 dark:border-white/10 dark:text-slate-400;

@@ -6,6 +6,6 @@ import NotFound from '../components/NotFound.astro';
 const locale = getLocaleFromUrl(Astro.url);
 ---
 
-<BaseLayout locale={locale} sectionNav={false}>
+<BaseLayout locale={locale} sectionNav={false} noindex>
   <NotFound locale={locale} />
 </BaseLayout>

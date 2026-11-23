@@ -26,7 +26,7 @@ const channels = [
   {
     key: 'linkedin',
     label: t('contact.linkedinLabel'),
-    value: 'in/dylan-sohet',
+    value: `in/${author.linkedinUsername}`,
     href: linkedinFor(locale),
     external: true,
     accent: 'bg-blue-500/10 text-blue-600 dark:text-blue-400',
@@ -34,7 +34,7 @@ const channels = [
   {
     key: 'github',
     label: t('contact.githubLabel'),
-    value: 'dylan-100inspi',
+    value: author.githubUsername,
     href: author.github,
     external: true,
     accent: 'bg-slate-500/10 text-slate-700 dark:text-slate-200',
@@ -92,6 +92,12 @@ const channels = [
         </li>
       ))}
     </ul>
+    <p
+      class="sr-only"
+      role="status"
+      data-copy-status
+      data-copied-label={t('commandPalette.copied')}
+    ></p>
 
     <div class="reveal mt-4">
       <a
@@ -109,6 +115,7 @@ const channels = [
 <script>
   const section = document.getElementById('contact');
   if (section) {
+    const status = section.querySelector<HTMLElement>('[data-copy-status]');
     section.querySelectorAll<HTMLButtonElement>('button[data-copy]').forEach((btn) => {
       btn.addEventListener('click', async () => {
         const text = btn.dataset.copy;
@@ -122,9 +129,11 @@ const channels = [
         const done = btn.querySelector('.copy-done');
         idle?.classList.add('hidden');
         done?.classList.remove('hidden');
+        if (status) status.textContent = status.dataset.copiedLabel ?? '';
         window.setTimeout(() => {
           idle?.classList.remove('hidden');
           done?.classList.add('hidden');
+          if (status) status.textContent = '';
         }, 1500);
       });
     });

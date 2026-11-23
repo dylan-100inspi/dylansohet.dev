@@ -60,13 +60,13 @@ const digits = ['4', '0', '4'];
         aria-hidden="true"
         class="loki-gif"
       />
-      <div class="loki-404" role="img" aria-label="404">
+      <h1 class="loki-404" aria-label="404">
         {digits.map((d) => (
           <span class="letter" aria-hidden="true">
             {d}
           </span>
         ))}
-      </div>
+      </h1>
     </div>
 
     <p class="mt-6 max-w-md font-mono text-base text-slate-600 sm:text-lg dark:text-slate-400">
@@ -84,14 +84,6 @@ const digits = ['4', '0', '4'];
 </section>
 
 <script>
-  let fontRollInterval: number | null = null;
-
-  function clearFontRollInterval() {
-    if (fontRollInterval === null) return;
-    window.clearInterval(fontRollInterval);
-    fontRollInterval = null;
-  }
-
   const fonts = [
     'var(--font-loki-kirang)',
     'var(--font-loki-indie)',
@@ -113,12 +105,8 @@ const digits = ['4', '0', '4'];
         if (nextFont) letter.style.fontFamily = nextFont;
       });
 
-    clearFontRollInterval();
-    fontRollInterval = window.setInterval(roll, 350);
+    window.setInterval(roll, 350);
   }
-
-  window.addEventListener('pagehide', clearFontRollInterval, { once: true });
-  document.addEventListener('astro:before-swap', clearFontRollInterval);
 </script>
 
 <style>

@@ -48,9 +48,9 @@ export async function mountSeason(season: Season): Promise<void> {
   if (!hero) return;
 
   const current = ++generation;
-  const { mount, styles } = await loaders[season]();
-  // Bail out if the visitor turned the theme off while the chunk was loading.
-  if (current !== generation || cleanup) return;
+  const seasonModule = await loaders[season]().catch(() => null);
+  if (!seasonModule || current !== generation || cleanup) return;
+  const { mount, styles } = seasonModule;
   adoptStyles(styles);
 
   const layer = document.createElement('div');

@@ -21,6 +21,7 @@ const testimonials = [
   {
     name: 'Leander Clappaert',
     role: 'Freelance Software Developer, Lead & Manager',
+    roleLang: 'en',
     photo: leanderPhoto,
     quoteLang: 'en',
     relationship: t('recommendations.relationship.leander'),
@@ -31,6 +32,7 @@ const testimonials = [
   {
     name: 'Nicolas Lemielle',
     role: 'CEO & Co-founder at DigiWall',
+    roleLang: 'en',
     photo: nicolasPhoto,
     quoteLang: 'fr',
     relationship: t('recommendations.relationship.nicolas'),
@@ -47,7 +49,7 @@ const testimonials = [
       {t('recommendations.heading')}
     </h2>
     <p class="reveal mt-3 text-slate-500 dark:text-slate-400">{t('recommendations.lead')}</p>
-    <p class="reveal mt-1 flex items-center gap-1.5 text-sm text-slate-400 dark:text-slate-500">
+    <p class="reveal mt-1 flex items-center gap-1.5 text-sm text-slate-500 dark:text-slate-400">
       <LinkedinIcon class="h-3.5 w-3.5" />
       {t('recommendations.source')}
     </p>
@@ -69,12 +71,15 @@ const testimonials = [
               alt={item.name}
               width={48}
               height={48}
+              densities={[1, 2]}
               class="h-12 w-12 shrink-0 rounded-full object-cover"
             />
             <div class="min-w-0 flex-1">
               <p class="font-semibold text-slate-900 dark:text-slate-100">{item.name}</p>
-              <p class="truncate text-sm text-slate-500 dark:text-slate-400">{item.role}</p>
-              <p class="text-xs text-slate-400 dark:text-slate-500">
+              <p lang={item.roleLang} class="text-sm text-slate-500 dark:text-slate-400">
+                {item.role}
+              </p>
+              <p class="text-xs text-slate-500 dark:text-slate-400">
                 {item.relationship} &middot; {item.date}
               </p>
             </div>

@@ -19,9 +19,10 @@ if (document.querySelector('script[data-website-id]')) {
     const ratios = new Map<string, number>();
     let activeId: string | null = null;
     let activeSince = 0;
+    let paused = false;
 
     const accrue = (now: number) => {
-      if (activeId !== null) {
+      if (activeId !== null && !paused) {
         const elapsed = (now - activeSince) / 1000;
         dwellSeconds.set(activeId, (dwellSeconds.get(activeId) ?? 0) + elapsed);
       }
@@ -55,11 +56,9 @@ if (document.querySelector('script[data-website-id]')) {
     );
     sectionEls.forEach((el) => dwellObserver.observe(el));
 
-    let flushed = false;
     const flush = () => {
-      if (flushed) return;
-      flushed = true;
       accrue(performance.now());
+      paused = true;
       for (const [id, seconds] of dwellSeconds) {
         if (seconds >= MIN_DWELL_SECONDS) {
           window.umami?.track('section-dwell', {
@@ -67,12 +66,18 @@ if (document.querySelector('script[data-website-id]')) {
             seconds: Math.round(seconds),
             locale,
           });
+          dwellSeconds.delete(id);
         }
       }
     };
 
     document.addEventListener('visibilitychange', () => {
-      if (document.visibilityState === 'hidden') flush();
+      if (document.visibilityState === 'hidden') {
+        flush();
+        return;
+      }
+      paused = false;
+      activeSince = performance.now();
     });
     window.addEventListener('pagehide', flush);
   }

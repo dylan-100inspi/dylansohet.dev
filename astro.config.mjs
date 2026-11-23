@@ -101,8 +101,8 @@ export default defineConfig({
       i18n: {
         defaultLocale: 'en',
         locales: {
-          en: 'en-CA',
-          fr: 'fr-CA',
+          en: 'en',
+          fr: 'fr',
         },
       },
     }),
@@ -151,6 +151,9 @@ export default defineConfig({
     plugins: [tailwindcss()],
     optimizeDeps: {
       include: ['@google/model-viewer'],
+    },
+    build: {
+      chunkSizeWarningLimit: 1100,
     },
   },
 });
