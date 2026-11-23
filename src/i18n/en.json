@@ -36,6 +36,7 @@
   },
   "commandPalette": {
     "placeholder": "Type a command or search…",
+    "title": "Command palette",
     "open": "Open command palette",
     "groupNavigation": "Navigation",
     "groupActions": "Actions",
@@ -93,6 +94,7 @@
     "viewRepo": "View repository",
     "viewLive": "View live",
     "placeholderCaption": "Preview coming soon",
+    "previewAlt": "{title} preview",
     "descriptions": {
       "portfolio": "This portfolio itself — a bilingual site that reflects who I am and the way I work."
     }

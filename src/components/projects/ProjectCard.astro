@@ -30,7 +30,7 @@ const t = useTranslations(locale);
     <ProjectThumbnail
       locale={locale}
       screenshot={project.screenshot}
-      alt={`${project.title} preview`}
+      alt={t('projects.previewAlt').replace('{title}', project.title)}
     />
   </div>
   <div class="flex flex-1 flex-col p-5">

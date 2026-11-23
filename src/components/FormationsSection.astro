@@ -13,31 +13,31 @@ interface Props {
 const { locale } = Astro.props;
 const t = useTranslations(locale);
 
-const formatMonth = (year: number, month: number) =>
-  new Date(year, month).toLocaleDateString(locale, { month: 'long', year: 'numeric' });
+const formatMonth = (isoMonth: string) =>
+  new Date(`${isoMonth}-01T00:00`).toLocaleDateString(locale, { month: 'long', year: 'numeric' });
 
 const courses = [
   {
     title: 'Angular - The Complete Guide',
-    issued: formatMonth(2026, 7),
+    issued: formatMonth('2026-08'),
     credentialId: 'UC-97b8a47e-2f62-4932-9d50-9dd44ecb6cb8',
     url: 'https://www.udemy.com/certificate/UC-97b8a47e-2f62-4932-9d50-9dd44ecb6cb8/',
   },
   {
     title: 'AI For Developers With GitHub Copilot, Cursor AI & ChatGPT',
-    issued: formatMonth(2026, 4),
+    issued: formatMonth('2026-05'),
     credentialId: 'UC-593ce0d8-5c89-48fe-be04-d8b7ba20850f',
     url: 'https://ude.my/UC-593ce0d8-5c89-48fe-be04-d8b7ba20850f/',
   },
   {
     title: "MongoDB - The Complete Developer's Guide",
-    issued: formatMonth(2026, 1),
+    issued: formatMonth('2026-02'),
     credentialId: 'UC-33144e8f-ae91-4928-9aad-4cc9f02eb4ab',
     url: 'https://ude.my/UC-33144e8f-ae91-4928-9aad-4cc9f02eb4ab',
   },
   {
     title: 'Playwright: Web Automation Testing',
-    issued: formatMonth(2025, 9),
+    issued: formatMonth('2025-10'),
     credentialId: 'UC-1eb5534d-9e08-4cbe-aec5-7e1ded36e545',
     url: 'https://ude.my/UC-1eb5534d-9e08-4cbe-aec5-7e1ded36e545',
   },
@@ -89,13 +89,15 @@ const courses = [
               />
             </div>
             <div class="min-w-0">
-              <h4 class="font-semibold text-slate-900 dark:text-slate-100">{course.title}</h4>
+              <h4 lang="en" class="font-semibold text-slate-900 dark:text-slate-100">
+                {course.title}
+              </h4>
               <p class="text-sm text-slate-500 dark:text-slate-400">
                 Udemy &middot; {t('formations.issued')} {course.issued}
               </p>
             </div>
           </div>
-          <p class="mt-auto pt-4 font-mono text-xs text-slate-400 dark:text-slate-500">
+          <p class="mt-auto pt-4 font-mono text-xs text-slate-500 dark:text-slate-400">
             {t('formations.credentialId')}: {course.credentialId}
           </p>
           <a

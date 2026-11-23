@@ -29,13 +29,7 @@ const t = useTranslations(locale);
 </nav>
 
 <script>
-  let sectionSpyController: AbortController | null = null;
-
   function initSectionSpy() {
-    sectionSpyController?.abort();
-    const controller = new AbortController();
-    const { signal } = controller;
-
     const sectionEls = Array.from(document.querySelectorAll<HTMLElement>('main section[id]'));
     const dots = Array.from(document.querySelectorAll<HTMLElement>('[data-dot]'));
     const headerLinks = Array.from(
@@ -48,7 +42,7 @@ const t = useTranslations(locale);
       headerLinks.forEach((link) => {
         const active = link.getAttribute('href')?.endsWith(`#${id}`) ?? false;
         link.classList.toggle('is-active', active);
-        if (active) link.setAttribute('aria-current', 'page');
+        if (active) link.setAttribute('aria-current', 'location');
         else link.removeAttribute('aria-current');
       });
     }
@@ -114,19 +108,16 @@ const t = useTranslations(locale);
     }
 
     computeActive();
-    window.addEventListener('scroll', onScroll, { passive: true, signal });
-    window.addEventListener('resize', onScroll, { signal });
-    document.addEventListener('click', onNavClick, { signal });
-    window.addEventListener('scrollend', releaseLock, { signal });
-    window.addEventListener('wheel', releaseLock, { passive: true, signal });
-    window.addEventListener('touchstart', releaseLock, { passive: true, signal });
-    window.addEventListener('keydown', onManualScrollKey, { signal });
-
-    sectionSpyController = controller;
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+    document.addEventListener('click', onNavClick);
+    window.addEventListener('scrollend', releaseLock);
+    window.addEventListener('wheel', releaseLock, { passive: true });
+    window.addEventListener('touchstart', releaseLock, { passive: true });
+    window.addEventListener('keydown', onManualScrollKey);
   }
 
   initSectionSpy();
-  document.addEventListener('astro:after-swap', initSectionSpy);
 </script>
 
 <style is:global>
@@ -141,45 +132,8 @@ const t = useTranslations(locale);
     transform: scale(1.35);
   }
 
-  /* Desktop header link: sliding underline under the label. */
-  #site-header nav a {
-    position: relative;
-  }
-  #site-header nav a:not(.mobile-nav-link)::after {
-    content: '';
-    position: absolute;
-    right: 0;
-    bottom: -4px;
-    left: 0;
-    height: 2px;
-    background: var(--color-teal-400, #2dd4bf);
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform 0.25s ease;
-  }
-  #site-header nav a:not(.mobile-nav-link).is-active::after {
-    transform: scaleX(1);
-  }
-
-  /* Mobile menu active link: accent text + a short left bar (avoids a full-width underline). */
-  #mobile-menu .mobile-nav-link.is-active {
-    color: var(--color-teal-400, #2dd4bf);
-  }
-  #mobile-menu .mobile-nav-link.is-active::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 0;
-    height: 1rem;
-    width: 3px;
-    transform: translateY(-50%);
-    border-radius: 9999px;
-    background: var(--color-teal-400, #2dd4bf);
-  }
-
   @media (prefers-reduced-motion: reduce) {
-    .nav-dot__mark,
-    #site-header nav a:not(.mobile-nav-link)::after {
+    .nav-dot__mark {
       transition: none !important;
     }
   }
